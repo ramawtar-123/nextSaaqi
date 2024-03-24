@@ -44,7 +44,13 @@ const postSchema = new mongoose.Schema({
   },
 });
 
-const Posts = mongoose.model('Post', postSchema);
+let Posts;
+
+try {
+  Posts = mongoose.model('Post');
+} catch {
+  Posts = mongoose.model('Post', postSchema);
+}
 
 export default Posts;
 

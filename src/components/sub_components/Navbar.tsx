@@ -172,7 +172,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode }) => {
 
           <div className="menuelement flex">
             <li className="menu">
-              <Link href="/settings">
+              <Link href="/settings?switchChange=true">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
