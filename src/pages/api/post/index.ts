@@ -30,7 +30,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ message: 'User not found' });
       }
 
-      // Create new post and populate the user field
       const post = await Post.create({
         content,
         user: userId,

@@ -6,7 +6,6 @@ import { GetServerSideProps } from 'next';
 import LoggedInHomePage from '../components/LoggedInHomePage';
 import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 
 
 
