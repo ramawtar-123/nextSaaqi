@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+
+.menu{
+    border-radius: 100%; 
+    background-color: rgb(43, 43, 43); 
+    color: white; 
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    justify-content: center;
+}
+
+body{
+    background-color: rgb(234, 234, 234);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.glass-blur{
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9.8px);
+    -webkit-backdrop-filter: blur(7.8px);
+    border: 1px solid rgba(255, 255, 255, 0.31);
+}
+
+
+
+.gradient-border{
+    border: '2px solid';
+    border-image: 'linear-gradient(to right, #FFC700, #7F00FF) 1';
+    border-image-slice: 1;
+}
+
+
+.dark-mode-bg{
+    background-color: black;
+    color: white;
+}
+
+.dark-mode-component-bg{
+    --tw-bg-opacity: 1;
+    background-color: rgb(39 39 42 / var(--tw-bg-opacity));
+    color: white;
+}
+
+.light-mode-bg{
+    --tw-bg-opacity: 1;
+    background-color: rgb(232 232 236 / var(--tw-bg-opacity));
+    color: black;
+}
+
+.light-mode-component-bg{
+    background-color: white;
+    color: black;
+}
+
+#logoutbutton{
+    border: solid white 3px;
+    
+    background-color: red;
+}
+
+.global-theme-color{
+    --tw-bg-opacity: 1;
+    background-color: rgb(126 34 206 / var(--tw-bg-opacity));
+}
+
+
+@layer utilities{
+    .boxshadow{
+        box-shadow: 
+        0 0 5px #03e9f4,
+        0 0 25px #03e9f4,
+        0 0 50pc #03e9f4,
+        0 0 100px 
+
+    }
+    .bluehai{
+        @apply text-[#03e9f4] uppercase   border-2     border-[#03e9f4]  rounded    
+    }
+    .bluehai:hover{
+        @apply text-white bg-[#03e9f4] boxshadow
+    }
+    .nav{
+        @apply relative   font-mono font-bold tracking-[1px] hover:text-white
+    }
+    .nav::after{
+        @apply content-[''] bg-purple-600 h-[3px] w-[0%] left-0 -bottom-[5px] rounded-xl absolute duration-300 text-gray-500
+
+}
+.nav:hover::after{
+    @apply w-[100%]
+}
+}
+
+
+
+
+  
+  
