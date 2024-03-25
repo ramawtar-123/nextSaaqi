@@ -28,7 +28,7 @@ function Homepage({ isDarkMode, backColor }: Props) {
   return (
     <>
     <Navbar isDarkMode={true} />
-      <div className={`${backColor} flex w-screen`}>
+      <div className={`${backColor} flex w-screen h-screen`}>
         <div
           className={` w-[77%] flex flex-col no-scrollbar pl-32`}
         >
