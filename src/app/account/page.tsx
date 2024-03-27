@@ -44,7 +44,7 @@ function Account() {
           </div>
 
           <div className='flex gap-7'>
-            <h1>{userData.posts.length}</h1> <span className='ml-[-7%]'>posts</span>
+            <h1>{}</h1> <span className='ml-[-7%]'>posts</span>
             <h1>{userData.followers }</h1> <span className='ml-[-7%]'>followers</span>
             <h1>{userData.followings }</h1> <span className='ml-[-7%]'>followings</span>
           </div>

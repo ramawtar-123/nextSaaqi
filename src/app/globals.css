@@ -41,6 +41,11 @@ body{
     background-color: rgb(234, 234, 234);
 }
 
+body::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }

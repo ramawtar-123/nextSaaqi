@@ -6,7 +6,8 @@ import { GetServerSideProps } from 'next';
 import LoggedInHomePage from '../components/LoggedInHomePage';
 import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useState } from "react";
-
+import * as React from "react";
+import {NextUIProvider} from "@nextui-org/react";
 
 
 const Home = () => {
@@ -34,7 +35,7 @@ const Home = () => {
           if (response.ok) {
             setIsLoggedIn(true);
           } else {
-            router.push('/login');
+            // router.push('/login');
           }
         } catch (error) {
           console.error('Error checking authentication:', error);
@@ -46,10 +47,19 @@ const Home = () => {
     }, []);
 
 
+    
   if (isLoggedIn) {
-    return <LoggedInHomePage isDarkMode={isDarkMode} backColor={backColor}/>;
+    return (
+    <NextUIProvider>
+      <LoggedInHomePage isDarkMode={isDarkMode} backColor={backColor}/>
+      </NextUIProvider>
+      );
   } else {
-    return <NonLoggedInHomePage />;
+    return (
+    <NextUIProvider>
+      <NonLoggedInHomePage />
+    </NextUIProvider>
+    );
   }
 }
 
