@@ -1,16 +1,17 @@
 "use client"
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { GetServerSideProps } from 'next';
 import LoggedInHomePage from '../components/LoggedInHomePage';
 import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useState } from "react";
 import * as React from "react";
-import {NextUIProvider} from "@nextui-org/react";
+
+
 
 
 const Home = () => {
+
+
 
   const router = useRouter();
   
@@ -50,15 +51,12 @@ const Home = () => {
     
   if (isLoggedIn) {
     return (
-    <NextUIProvider>
-      <LoggedInHomePage isDarkMode={isDarkMode} backColor={backColor}/>
-      </NextUIProvider>
+         <LoggedInHomePage isDarkMode={isDarkMode} backColor={backColor}/>
       );
   } else {
     return (
-    <NextUIProvider>
-      <NonLoggedInHomePage />
-    </NextUIProvider>
+        <NonLoggedInHomePage />
+      
     );
   }
 }

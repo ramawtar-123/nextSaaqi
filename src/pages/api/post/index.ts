@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   
       const populatedPost = await Post.findById(post._id).populate('user');
 
-      user.posts.push(userId);
+      user.posts.push(post._id);
       await user.save();
 
       res.status(201).json({ message: 'Post created successfully', post: populatedPost });

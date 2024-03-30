@@ -19,6 +19,7 @@ const NonLoggedInHomePage = () => {
   const mount = useRef(null);
 
   useEffect(() => {
+    if (mount.current === null) return;
     const scene = new THREE.Scene();
     const aspectRatio = window.innerWidth / (3 * window.innerHeight); // Adjusted aspect ratio for doubled height
     const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
@@ -85,7 +86,7 @@ const NonLoggedInHomePage = () => {
     animate();
 
     return () => {
-        mount.current.removeChild(renderer.domElement);
+        // mount.current.removeChild(renderer.domElement);
     };
 }, []);
 

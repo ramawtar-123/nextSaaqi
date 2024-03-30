@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 function Register() {
@@ -42,10 +42,11 @@ function Register() {
     }
   };
 
+
   return (
     <>
-      <div className="bg-[url(https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] w-full h-[100vh]">
-        <div className="flex items-center justify-center temp-bg h-[100vh] ">
+      <div className="bg-[url(https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] w-screen h-[100vh] bg-cover">
+        <div className="flex items-center justify-center blackShade h-[100vh] ">
           <div className="back h-full w-[100%]">
             <div className="h-10 w-[50%] flex  justify-between text-white ">
               <div className="logo h-10 w-10 rounded-full ml-32 mt-9 object-cover ">
@@ -89,7 +90,7 @@ function Register() {
                         </a>
                       </h3>
                     </h1>
-                    <div className="gap-5 flex mr-10 mb-[-9px] ml-[-0.5rem] ">
+                    <div className="gap-5 flex mr-10 mb-[-9px] ml-[3rem] ">
                       <input
                         type="text"
                         name="fullname"
@@ -97,7 +98,7 @@ function Register() {
                         onChange={handleChange}
                         id="name"
                         placeholder="Full Name"
-                        className="first w-[42%] h-9 pl-5 font-[14px] text-[14px]  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="first w-[37%] h-9 pl-5 font-[14px] text-[14px]  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                       <input
                         type="text"
@@ -106,7 +107,7 @@ function Register() {
                         onChange={handleChange}
                         id="uname"
                         placeholder="UserName"
-                        className="last w-[39%] h-9 p-4 pl-5 text-[14px] focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="last w-[35%] h-9 p-4 pl-5 text-[14px] focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                     </div>
                     <div className="gap-5 flex-col ml-14 ">
@@ -118,7 +119,7 @@ function Register() {
                         id="email"
                         placeholder="Email"
                         className="email w-[69%] h-9 text-[14px] mb-[0.8rem]  pl-6 mr-28 focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl "
-                      />
+                      />                
                       <input
                         type="password"
                         name="password"

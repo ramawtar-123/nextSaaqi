@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface FormData {
   email: string;
@@ -53,8 +54,8 @@ const Login = () => {
 
   return (
     <>
-      <div className="bg-[url(https://images.unsplash.com/photo-1707343843982-f8275f3994c5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] w-full h-[100vh]">
-        <div className="flex items-center temp-bg justify-center h-[100vh] ">
+      <div className="bg-[url(https://images.unsplash.com/photo-1534531409543-069f6204c5b4?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)] w-full h-[100vh]">
+        <div className="flex items-center blackShade justify-center h-[100vh] ">
           <div className='back h-full w-[100%] '>
             <div className='h-10 w-[50%] flex  justify-between text-white '>
               <div className='logo h-10 w-10 bg-purple-500 rounded-full ml-32 mt-9 '><h1 className='ml-14 text-2xl font-bold hover:text-purple-500'>SAAQI</h1></div>
@@ -73,18 +74,14 @@ const Login = () => {
                     <div className='items-start '>
                       <a className='text-[13px] text-zinc-300 '> Don't have an Account?</a> <a href="/register" className='text-[13px] text-purple-700 font-semibold'>Register</a>
                     </div>
-                    <input type="email" value={formData.email} onChange={handleChange} name="email" id="email" placeholder='Email' className='Email w-[90%] h-9 p-4 pl-6 bg-slate-800 rounded-lg focus:outline-none placeholder-gray-200 mb-[-10px] text-[14px]' />
-                    <input type="password" value={formData.password} onChange={handleChange} name="password" id="password" placeholder='Password' className='Password w-[90%] h-9 p-4 pl-6 bg-slate-800 rounded-lg focus:outline-none placeholder-gray-200 text-[14px]' />
+                    <input type="email" value={formData.email} onChange={handleChange} name="email" id="email" placeholder='Email' className='Email w-[90%] h-9 p-4 pl-6 bg-slate-800 rounded-[8px] focus:outline-none placeholder-gray-200 mb-[-10px] text-[14px]' />
+                    <input type="password" value={formData.password} onChange={handleChange} name="password" id="password" placeholder='Password' className='Password w-[90%] h-9 p-4 pl-6 bg-slate-800 rounded-[8px] focus:outline-none placeholder-gray-200 text-[14px]' />
                     <div className="flex gap-[5.2rem] ">
-                      <div>
-                        <input type="checkbox" name="remember-me" id="remember-user" />
-                        <label htmlFor="remember-user">Remember me</label>
-                      </div>
                       <a href="/forget-password" className='text-[13px] text-zinc-300'>Forget Password?</a>
                     </div>
                     <div className='flex gap-5 h-full w-[100%] ml-1'>
-                      <input type="submit" value="Change Method" className='w-[10vw] h-10 p-2 mt-7 text-[13px] font-semibold mt-[-6px] bg-slate-500 text-white rounded-full' />
-                      <input type="submit" value="Submit" className='w-[10vw] h-10 ml-2 p-2 mt-7 text-[13px] font-semibold mt-[-6px] bg-purple-700 hover:bg-slate-500 hover:scale-105text-white rounded-full' />
+                      <Link href={"/api/"} className='w-[10vw] text-center h-10 p-2 pt-[0.7rem] text-[13px] font-semibold mt-[-6px] bg-slate-500 text-white rounded-full' >Change Method</Link>
+                      <input type="submit" value="Submit" className='w-[10vw] h-10 ml-2 p-2 text-[13px] font-semibold mt-[-6px] bg-purple-700 hover:bg-slate-500 hover:scale-105text-white rounded-full' />
                     </div>
                   </div>
                 </form>

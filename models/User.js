@@ -11,20 +11,20 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         unique: true,
-        required: true,
+        required: false,
     },
     email: {
         type: String,
         unique: true,
-        required: true,
+        required: false,
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
     confirmpassword: {
         type: String,
-        required: true,
+        required: false,
     },
     profilePicture: {
         type: String, 
@@ -58,14 +58,43 @@ const UserSchema = new mongoose.Schema({
             },
         }
     ],
-    followers: {
-        type: Number,
-        default: 0
-    },
-    followings: {
-        type: Number,
-        default: 0
-    },
+    stories: [
+        {
+            story: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Story',
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now()
+            }
+        },
+        
+    ],
+    followers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now,
+            },
+        }
+    ],
+    followings: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now,
+            },
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now,

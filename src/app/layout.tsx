@@ -1,9 +1,9 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import * as React from "react";
-import { Suspense } from "react";
-import Loading1 from "./Loading1"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +17,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     
     <html lang="en">    
       <body className={inter.className}>
-        <Suspense fallback={<Loading1/>} >
-          {children}
-        </Suspense>
+            {children}
       </body>
     </html>
   );

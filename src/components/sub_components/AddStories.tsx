@@ -2,26 +2,41 @@
 
 import React from 'react';
 import Link from 'next/link';
+import FileUploadButton from '../helpers/FileUploadButton';
 
 function AddStories(): JSX.Element {
+
+  const handleFileUpload = async (file: File) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/story', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('File uploaded successfully!');
+      } else {
+        alert('Failed to upload file.');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('An error occurred while uploading the file.');
+    }
+  }
+
+
   return (
     <>
-      <Link href="/addstory">
        
           <div className="w-16 h-16 bg-pink-100 text-black flex justify-center items-center rounded-full m-5 min-w-16">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
+           
+              <FileUploadButton onFileUpload={handleFileUpload} />
+             
           </div>
-      
-      </Link>
+
     </>
   );
 }
