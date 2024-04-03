@@ -7,12 +7,8 @@ import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, sig
 import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import Login from '../login/page'
-<<<<<<< HEAD
-import Home from '../page';
-=======
 import { useRouter } from 'next/navigation'
 import { FacebookAuthProvider } from "firebase/auth";
->>>>>>> c4118b6ba74a942b81f202bed5287f7c6401ad45
 
 
 const firebaseConfig = {
@@ -63,19 +59,13 @@ const page = () => {
       }
     })
   }, [])
-  console.log(user);
 
-<<<<<<< HEAD
-  if(user != null){
-    return <Home />
-=======
   console.log(user)
 
   
   const redirectToMain = () => {
   if(user != ""){
-    router.push("/")
->>>>>>> c4118b6ba74a942b81f202bed5287f7c6401ad45
+    router.push("/account/edit-info")
   }
 
 }

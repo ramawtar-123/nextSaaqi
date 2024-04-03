@@ -56,7 +56,7 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
   return (
     <>
       {userData.map((elem, index) => (
-        <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} friends-animation users w-[80%] h-24 rounded `}>
+        <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} hover:drop-shadow-[0_20px_20px_rgba(58,20,80,0.65)]  friends-animation users w-[80%] h-24 rounded `}>
           <div className="flex">
             <div className="profile">
               <button className='w-12 h-12 flex justify-center items-center rounded-full m-5 ml-8 mr-3 min-w-12'>

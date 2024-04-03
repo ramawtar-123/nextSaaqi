@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function Register() {
   const router = useRouter();
@@ -140,11 +141,8 @@ function Register() {
                       />
                     </div>
                     <div className="flex w-full mt-[-20px] ml-28 gap-6">
-                      <input
-                        type="submit"
-                        value="Change Method"
-                        className="method w-[30%] h-9 p-2 mt-7 bg-purple-900 text-white rounded-full text-[13px] font-semibold"
-                      />
+                      <Link href={"/other-methods"} className="method w-[30%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
+                      
                       <input
                         type="submit"
                         value="Next"

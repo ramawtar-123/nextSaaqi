@@ -5,6 +5,8 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
 
+import { UseSelector, useSelector } from 'react-redux';
+
 interface Post {
   username: string;
   image: string;
@@ -55,7 +57,7 @@ const [posts, setPosts] = useState([]);
   return (
     <>
       {posts.map((elem, index) => (
-        <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} feed-animation w-[90%] flex-col h-auto mx-10 mt-10 rounded-xl overflow-y-auto`}>
+        <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} hover:drop-shadow-[0_20px_20px_rgba(58,20,80,0.65)] feed-animation w-[90%] flex-col h-auto mx-10 mt-10 rounded-xl overflow-y-auto`}>
           <div className="flex account-info justify-between">
             <div className="flex mt-3">
               <Link href={`/user/${elem.user.username}`}>

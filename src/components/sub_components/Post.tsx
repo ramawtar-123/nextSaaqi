@@ -45,7 +45,7 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
 
   return (
     <>
-      <div className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} post-animation w-[90%] h-40 rounded-xl mx-10 flex flex-col`}>
+      <div className={`${isDarkMode ? "bg-zinc-900" : "light-mode-component-bg"} hover:drop-shadow-[0_20px_20px_rgba(58,20,80,0.65)]  post-animation w-[90%] h-40 rounded-xl mx-10 flex flex-col`}>
         <form onSubmit={handleSubmit}>
           <div className="text flex">
             <Link href="/account">
