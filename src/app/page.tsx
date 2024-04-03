@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import LoggedInHomePage from '../components/LoggedInHomePage';
 import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import * as React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, toggleDarkMode } from '../store/actions/index';
@@ -38,7 +38,6 @@ const githubProvider = new GithubAuthProvider();
 const Home = () => {
 
   const isLoggedIn = useSelector(state => state.rootReducer.isLoggedIn);
-  const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
   const dispatch = useDispatch();
 
 
@@ -81,19 +80,16 @@ const Home = () => {
       checkAuthentication();
     }, []);
 
-
     
-  if (isLoggedIn) {
-    return (
-         <LoggedInHomePage />
-      );
-  } else {
-    return (
-        <NonLoggedInHomePage />
-      
-    );
-  }
-}
+    const renderedComponent = useMemo(() => {
+      if (isLoggedIn) 
+        return <LoggedInHomePage />;
+      else 
+        return <NonLoggedInHomePage />;
+    }, [isLoggedIn]);
+  
+    return renderedComponent;
+  };
 
 
 export default Home;
