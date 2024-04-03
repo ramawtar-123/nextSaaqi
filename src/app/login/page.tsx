@@ -80,7 +80,7 @@ const Login = () => {
                       <a href="/forget-password" className='text-[13px] text-zinc-300'>Forget Password?</a>
                     </div>
                     <div className='flex gap-5 h-full w-[100%] ml-1'>
-                      <Link href={"/api/"} className='w-[10vw] text-center h-10 p-2 pt-[0.7rem] text-[13px] font-semibold mt-[-6px] bg-slate-500 text-white rounded-full' >Change Method</Link>
+                      <Link href={"/other-methods"} className='w-[10vw] text-center h-10 p-2 pt-[0.7rem] text-[13px] font-semibold mt-[-6px] bg-slate-500 text-white rounded-full' >Change Method</Link>
                       <input type="submit" value="Submit" className='w-[10vw] h-10 ml-2 p-2 text-[13px] font-semibold mt-[-6px] bg-purple-700 hover:bg-slate-500 hover:scale-105text-white rounded-full' />
                     </div>
                   </div>

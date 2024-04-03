@@ -65,7 +65,7 @@ const page = () => {
   
   const redirectToMain = () => {
   if(user != ""){
-    router.push("/")
+    router.push("/account/edit-info")
   }
 
 }

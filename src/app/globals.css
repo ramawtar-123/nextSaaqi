@@ -75,7 +75,7 @@ body::-webkit-scrollbar {
 
 .dark-mode-component-bg{
     --tw-bg-opacity: 1;
-    background-color: rgb(39 39 42 / var(--tw-bg-opacity));
+    background-color: rgb(20 20 20 / var(--tw-bg-opacity));
     color: white;
 }
 

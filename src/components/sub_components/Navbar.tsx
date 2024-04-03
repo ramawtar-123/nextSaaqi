@@ -6,10 +6,35 @@ import { useRouter } from "next/navigation";
 import { colors } from "@mui/material";
 import { gsap, Power3 } from "gsap";
 import { useGSAP } from "@gsap/react";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+
+
+
+
 
 interface NavbarProps {
   isDarkMode: boolean;
 }
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
+  authDomain: "saaqi-194de.firebaseapp.com",
+  projectId: "saaqi-194de",
+  storageBucket: "saaqi-194de.appspot.com",
+  messagingSenderId: "178575618437",
+  appId: "1:178575618437:web:3a0b80ddb4da44ac04d4ec",
+  measurementId: "G-L17RZF5ZKF",
+  databaseURL: "https://saaqi-194de-default-rtdb.firebaseio.com/"
+};
+
+
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseAuth = getAuth(firebaseApp);
+
 
 const Navbar: React.FC<NavbarProps> = ({ isDarkMode }) => {
   const router = useRouter();
@@ -17,6 +42,12 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode }) => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("token");
+
+    try {
+      firebaseAuth.signOut()
+   } catch (error) {
+     console.error('');
+   }
   };
 
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
