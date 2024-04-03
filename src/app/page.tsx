@@ -5,9 +5,8 @@ import LoggedInHomePage from '../components/LoggedInHomePage';
 import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useState } from "react";
 import * as React from "react";
-import { useReducer } from "react";
-import { UseDispatch, useSelector } from "react-redux";
-import { UserSlice } from '../store/reducers/UserReducer'
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout, toggleDarkMode } from '../store/actions/index';
 
 
 import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
@@ -35,11 +34,12 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 
-//dispatch(userdelete)
-
 
 const Home = () => {
 
+  const isLoggedIn = useSelector(state => state.rootReducer.isLoggedIn);
+  const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
+  const dispatch = useDispatch();
 
 
   useEffect( () => {
@@ -51,38 +51,15 @@ const Home = () => {
     )()
   }, [])
 
-
-
-  const router = useRouter();
-  
-    let [isDarkMode, setIsDarkMode] = useState(true);
-
-    const switchChanged = () => {
-        setIsDarkMode(!isDarkMode);
-        console.log(isDarkMode);
-    }
-    console.log(isDarkMode);
-
-    let backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
-
-
-    let [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-
-
-
-
-    const [user, setUser] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
       onAuthStateChanged(firebaseAuth, (user) => {
         if(user){
-          setUser(user);
-          setIsLoggedIn(true)
+          dispatch(login())
         }
         else{
-          setUser("");
-          setIsLoggedIn(false)
+          dispatch(logout())
         }
       })
     }, [])
@@ -93,9 +70,7 @@ const Home = () => {
         try {
           const response = await fetch('/api/');
           if (response.ok) {
-            setIsLoggedIn(true);
-          } else {
-            // router.push('/login');
+            dispatch(login())
           }
         } catch (error) {
           console.error('Error checking authentication:', error);
@@ -110,7 +85,7 @@ const Home = () => {
     
   if (isLoggedIn) {
     return (
-         <LoggedInHomePage isDarkMode={isDarkMode} backColor={backColor}/>
+         <LoggedInHomePage />
       );
   } else {
     return (

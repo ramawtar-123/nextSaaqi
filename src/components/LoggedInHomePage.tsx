@@ -10,13 +10,15 @@ import Stories from "./sub_components/Stories";
 import Search from "./sub_components/Search";
 import UserAccount from "./sub_components/UserComponent";
 import Navbar from "./sub_components/Navbar";
+import { useSelector } from "react-redux";
 
-interface Props {
-  isDarkMode: boolean;
-  backColor: string;
-}
 
-function Homepage({ isDarkMode, backColor }: Props) {
+
+function Homepage() {
+
+  const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
+  const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
+
   useGSAP(() => {
     gsap.from(".friends", {
       x: 100,
@@ -27,7 +29,7 @@ function Homepage({ isDarkMode, backColor }: Props) {
 
   return (
     <>
-    <Navbar isDarkMode={true} />
+    <Navbar/>
       <div className={`${backColor} flex w-screen min-h-screen`}>
         <div
           className={` w-[77%] flex flex-col no-scrollbar pl-32`}

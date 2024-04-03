@@ -84,7 +84,7 @@ function Account() {
 
   return (
     <>
-      <Navbar isDarkMode={true}/>
+      <Navbar />
       <div className="main flex gap-32 dark-mode-bg w-full h-[100vh] p-32 pl-[30rem]">
         <div className="profile w-[10rem] h-[10rem] overflow-hidden rounded-full relative cursor-pointer">
           <img src={userData.profilePicture || "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"} className='object-cover object-center' />

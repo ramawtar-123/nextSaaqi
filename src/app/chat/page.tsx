@@ -74,7 +74,7 @@ const Chat = () => {
 
   return (
     <>
-    <Navbar isDarkMode={true}/>
+    <Navbar />
         <div className="main dark-mode-bg min-h-[100vh] flex w-[100vw]">
             <div className="left w-[30%] ml-[10rem] mt-12 flex-col">
                 <h1 className='text-[1.5rem] font-semibold'>Chats</h1>

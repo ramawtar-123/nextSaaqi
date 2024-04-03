@@ -10,14 +10,11 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/store/actions";
 
 
 
-
-
-interface NavbarProps {
-  isDarkMode: boolean;
-}
 
 
 const firebaseConfig = {
@@ -36,8 +33,12 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 
 
-const Navbar: React.FC<NavbarProps> = ({ isDarkMode }) => {
+const Navbar = () => {
   const router = useRouter();
+
+  const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
+  const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
+  const dispatch = useDispatch()
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -45,6 +46,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode }) => {
 
     try {
       firebaseAuth.signOut()
+      dispatch(logout())
+
    } catch (error) {
      console.error('');
    }
