@@ -39,11 +39,11 @@ const NonLoggedInHomePage = () => {
     scene.add(sphere);
 
         const light1 = new THREE.PointLight(0xbf3d9f, 2)
-        const light2 = new THREE.PointLight(0xc9149c, 2)
+        const light2 = new THREE.PointLight(0xc9149c, 1)
         const light3 = new THREE.PointLight(0xbf3d9f, 2)
 
         const lighty = 0;
-        const lightz = -3;
+        const lightz = 0;
 
 
         light1.position.set(- 2, lighty, lightz);
@@ -125,7 +125,9 @@ useEffect(() => {
           </div>
       </div>
           <div className="a mt-[50vh] h-[500vh] bg-black">
-
+          <div className="box text-white justify-center text-center">Bitcoin</div>
+          <div className="box text-white justify-center text-center">Bitcoin</div>
+          <div className="box text-white justify-center text-center">Bitcoin</div>
           </div>
     </>
   )

@@ -7,6 +7,7 @@ import { GoogleAuthProvider,GithubAuthProvider, createUserWithEmailAndPassword, 
 import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import Login from '../login/page'
+import Home from '../page';
 
 
 const firebaseConfig = {
@@ -50,9 +51,10 @@ const page = () => {
       }
     })
   }, [])
+  console.log(user);
 
-  if(user == null){
-    return <Login />
+  if(user != null){
+    return <Home />
   }
   
 
