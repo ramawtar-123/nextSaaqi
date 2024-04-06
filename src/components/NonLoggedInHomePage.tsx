@@ -39,11 +39,11 @@ const NonLoggedInHomePage = () => {
     scene.add(sphere);
 
         const light1 = new THREE.PointLight(0xbf3d9f, 2)
-        const light2 = new THREE.PointLight(0xc9149c, 2)
+        const light2 = new THREE.PointLight(0x0000ff, 1)
         const light3 = new THREE.PointLight(0xbf3d9f, 2)
 
         const lighty = 0;
-        const lightz = -3;
+        const lightz = -0.7;
 
 
         light1.position.set(- 2, lighty, lightz);
@@ -63,7 +63,7 @@ const NonLoggedInHomePage = () => {
 
     plane.position.x = 0;
     plane.position.y = -2;
-    plane.position.z = -8;
+    plane.position.z = -2;
 
 
 
@@ -79,6 +79,14 @@ const NonLoggedInHomePage = () => {
         light1.position.y = scrollY * 0.01;
         light2.position.y = scrollY * 0.01;
         light3.position.y = scrollY * 0.01;
+
+        const time = performance.now() / 80000;
+        const movement = Math.sin(time * Math.PI) * 15; 
+        const lightDistance = 4; 
+    
+        light1.position.x = Math.cos(movement) * lightDistance;
+        light2.position.x = Math.cos(movement + Math.PI * 2 / 3) * lightDistance; 
+        light3.position.x = Math.cos(movement + Math.PI * 4 / 3) * lightDistance; 
 
         renderer.render(scene, camera);
     };

@@ -87,7 +87,8 @@ const Home = () => {
       else 
         return <NonLoggedInHomePage />;
     }, [isLoggedIn]);
-  
+
+
     return renderedComponent;
   };
 

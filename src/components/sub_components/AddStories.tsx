@@ -31,7 +31,7 @@ function AddStories(): JSX.Element {
   return (
     <>
        
-          <div className="w-16 h-16 bg-pink-100 text-black flex justify-center items-center rounded-full m-5 min-w-16">
+          <div className="w-16 h-16 bg-zinc-300 text-black flex justify-center items-center rounded-full m-5 min-w-16">
            
               <FileUploadButton onFileUpload={handleFileUpload} />
              

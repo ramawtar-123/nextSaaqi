@@ -106,6 +106,7 @@ const page = () => {
             </div>
             <div className="box flex flex-col transition-all items-center h-[80vh] w-[28vw] rounded-xl  text-white mt-24 ml-56">
               <div className="dets mt-[9%] transition-all  w-[90%] h-[70%] flex flex-col justify-center ">
+              <h1 className='text-4xl font-semibold mb-10'>Register</h1>
                 <button onClick={ USER && Object.keys(USER).length > 0 ? redirectToMain : signupWithGoogle} className='w-[18rem] h-[3rem] mb-3 rounded-full text-black bg-zinc-100'>
                   Signup With Google
                 </button>

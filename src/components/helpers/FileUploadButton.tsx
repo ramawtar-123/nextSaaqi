@@ -22,7 +22,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ onFileUpload }) => 
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
-      <button onClick={() => inputRef.current?.click()}>Upload Image</button>
+      <button onClick={() => inputRef.current?.click()}>+</button>
     </div>
   );
 };
