@@ -1,7 +1,5 @@
 "use client"
 
-import Login from '@/app/login/page';
-import Register from '@/app/register/page';
 import React, { useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation'
 import Link from 'next/link';
