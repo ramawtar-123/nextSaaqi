@@ -291,11 +291,22 @@ const NonLoggedInHomePage = () => {
           <div className="description pt-10 bg-black text-white justify-center text-center grid gap-20 ">
             <h1 className="text-4xl">TYPOGRAPHY</h1>
             <h1 className="text-6xl">PLUS JAKARTA SANS</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur <br /> adipisicing elit.
-              Ducimus possimus eius <br /> eligendi ipsa voluptatebr
-              <br /> asperiores, aliquam fuga quam expedita alias <br />{" "}
-              distinctio, totam cupiditate corporis?
+            <p className="font-[sathosi] font-2xl">
+              <b className="font-[Time-new-Roman]  text-xl">
+                Introducing Saaqi,{" "}
+              </b>{" "}
+              a vibrant social media platform designed to <br /> connect people
+              through shared experiences and creative expression. <br /> Saaqi
+              offers a plethora of features to enrich users' <br /> digital
+              interactions. <br />
+              From captivating photo band video sharing to immersive Stories and
+              live streaming, <br /> Saaqi empowers users to express themselves
+              authentically. <br /> <br />
+              <br />{" "}
+              <p className="text-2xl">
+                Join Saaqi today and embark on a journey of creativity,
+                connection, and community.
+              </p>
             </p>
             <h3 className="text-3xl">COLOR PALETTE</h3>
             <div className="btns flex justify-center text-center gap-20">
@@ -319,14 +330,21 @@ const NonLoggedInHomePage = () => {
                 WEBFLOW TRICKS <br /> and <br />
                 WIZARDRY{" "}
               </h1>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur <br />
-                adipisicing elit. Explicabo consequatur <br /> laboriosam
-                voluptatibus voluptas ipsa officibr <br />a nam rerum quo,
-                sapiente harum atque, architecto facere!
+              <p className="leading-loose">
+                Its sleek interface encourages <br /> seamless navigation and
+                discovery, <br />
+                while robust privacy controls ensure users feel secure in their
+                online presence. <br /> Saaqi fosters community through likes,
+                comments, and direct messaging, <br /> facilitating meaningful
+                connections and conversations. <br /> Additionally, Saaqi's
+                Explore page curates personalized <br /> content tailored to
+                users' interests, fostering discovery and inspiration. <br />{" "}
+                Whether it's connecting with friends, discovering new passions,
+                or showcasing talents, <br /> Saaqi is the ultimate destination
+                for social networking and self-expression in the digital age.
               </p>
               <button className="button3 mt-4 w-96 rounded-md h-14 items-center px-10 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-purple-600 hover:bg-gradient-to-r from-fuchsia-500">
-                GLASSMORPHISM TUTORIAL
+                Know More
               </button>
             </div>
 
@@ -340,22 +358,12 @@ const NonLoggedInHomePage = () => {
 
           {/* tricky and wizardry second*/}
           <div className="flex mt-32 justify-around bg-black text-white">
-
-
-          <div className="w-96 h-32 mt-20">
+            <div className="w-96 h-32 mt-20">
               <img
                 src="https://images.unsplash.com/photo-1712371962703-3d53845ab565?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8"
                 alt=""
               />
             </div>
-
-        
-
-
-
-
-
-
 
             <div className="left-vala ml-20 flex flex-col gap-20">
               <h1 className="text-6xl mt-20 leading-20">
@@ -373,12 +381,7 @@ const NonLoggedInHomePage = () => {
                 GLASSMORPHISM TUTORIAL
               </button>
             </div>
-
-          
           </div>
-
-
-
 
           {/* footer */}
           <footer className="bg-black text-white justify-center text-center mt-32">
@@ -391,7 +394,7 @@ const NonLoggedInHomePage = () => {
                   <li>
                     <a
                       className="no-underline text-slate-400 hover:text-white text-sm"
-                      href="#"
+                      href="../FooterTags/About.tsx"
                     >
                       About us
                     </a>
