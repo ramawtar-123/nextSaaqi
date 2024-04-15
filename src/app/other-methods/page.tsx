@@ -7,12 +7,11 @@ import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, sig
 import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import Login from '../login/page'
+import Home from '../page';
 import { useRouter } from 'next/navigation'
 import { FacebookAuthProvider } from "firebase/auth";
-
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, toggleDarkMode, setUSER } from '../../store/actions';
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -56,9 +55,9 @@ const page = () => {
       }
     })
   }, [])
+  console.log(user);
 
-  // console.log(user)
-  console.log(USER)
+  console.log(user)
 
   
   const redirectToMain = () => {
@@ -86,9 +85,6 @@ const page = () => {
   const signupWithFacebook = () => {
     signInWithPopup(firebaseAuth, facebookProvider)
   }
-
-
-
   
 
 

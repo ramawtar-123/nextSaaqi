@@ -108,10 +108,38 @@ body::-webkit-scrollbar {
 background: linear-gradient(72deg, rgba(22,12,110,1) 0%, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.8268557422969187) 70%, rgba(0,0,0,0.7288165266106443) 75%, rgba(0,0,0,0.6027661064425771) 80%, rgba(255,255,255,0) 100%);
 }
 
+  .footer-col input::placeholder{
+    color:#ccc;
+  }
   
-  
+
+/* button- subscribe vali */
+  .glow-on-hover {
+    @apply relative z-10 rounded-lg;
+}
+
+.glow-on-hover:before {
+    @apply absolute top-0 left-0 w-full h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 blur-md opacity-0 transition-opacity duration-300 rounded-lg;
+    content: '';
+    animation: glowing 20s linear infinite;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:before {
+  @apply absolute top-0 left-0 w-full h-full bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 blur-md opacity-0 transition-opacity duration-300 rounded-lg;
+  content: '';
+  animation: glowing 20s linear infinite;
+}
+
+.glow-on-hover:hover:before {
+  opacity: 1;
+}
 
 /* --color-gradient-primary: linear-gradient(83deg, rgba(var(--color-v3-light-blue)) -5%, rgba(var(--color-v3-purple)) 51%, rgba(var(--color-v3-pink)) 125%);
 --color-gradient-purple-1: linear-gradient(29deg, rgba(var(--color-v3-purple)) 26%, rgba(var(--color-v3-pink)) 161%);
 --color-gradient-purple-2: linear-gradient(133deg, rgba(var(--color-v3-purple)) 16%, rgba(var(--color-v3-pink)) 136%);
 --color-gradient-blue-1: linear-gradient(21deg, rgba(var(--color-v3-blue)) 33%, rgba(var(--color-v3-light-blue)) 129%); */
+
