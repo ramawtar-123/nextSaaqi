@@ -13,19 +13,20 @@ function AddStories(): JSX.Element {
     setFile(event.target.files[0]);
   };
 
-  const handleFileUpload = async (event) => {
+  const handleFileUpload = async (formData: FormData) => {
 
-    event.preventDefault();
+    // event.preventDefault();
+
     
     try {
 
-      const formData = new FormData();
-      formData.append('name', file.name);
-      formData.append('file', file);
-      console.log(file)
+      // const formData = new FormData();
+      // formData.append('name', file.name);
+      // formData.append('file', file);
+      console.log(formData.file)
 
       const response = await fetch('/api/story', {
-        method: 'PUT',
+        method: 'POST',
         body: formData,
         headers: {
           "Content-Type": "multipart/form-data"
@@ -48,7 +49,7 @@ function AddStories(): JSX.Element {
        
           <div className="w-16 h-16 bg-zinc-300 text-black flex justify-center items-center rounded-full m-5 min-w-16">
            
-          <form onSubmit={handleFileUpload} className='relative' encType="multipart/form-data">
+          <form action={handleFileUpload} className='relative' encType="multipart/form-data">
             <input
               type="file"
               name='file'

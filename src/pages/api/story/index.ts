@@ -25,12 +25,12 @@ const s3 = new AWS.S3();
 
 
 
-const uploadToS3 = async (file) => {
-    console.log(file);
+const uploadToS3 = async (req) => {
+    console.log(req.file.buffer);
   const params = {
     Bucket: 'saaqibucketdb',
-    Key: file.name,
-    Body: file.buffer,
+    Key: req.file.originalname,
+    Body: req.file.buffer,
     ACL: 'private',
   };
 
@@ -46,7 +46,7 @@ const uploadToS3 = async (file) => {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-  if (req.method === 'PUT') {
+  if (req.method === 'POST') {
     try {
 
       upload.single('file')(req, res, async (err) => {
@@ -55,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           return res.status(500).json({ success: false, error: 'Error uploading file' });
         }
 
-      const uploadedFileUrl = await uploadToS3(req.body);
+      const uploadedFileUrl = await uploadToS3(req);
 
       const newStory = new Story({
         story: uploadedFileUrl,

@@ -6,7 +6,8 @@ import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useMemo } from "react";
 import * as React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout } from '../store/actions/index';
+import { login, logout, setUSER } from '../store/actions/index';
+import {Suspense} from 'react'
 
 
 import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
@@ -55,12 +56,18 @@ const Home = () => {
       onAuthStateChanged(firebaseAuth, (user) => {
         if(user){
           dispatch(login())
+          dispatch(setUSER({
+            displayName: user.displayName,
+            email: user.email,
+          }))  
         }
         else{
           dispatch(logout())
         }
+        console.log("checked user")
       })
     }, [])
+
 
 
     useEffect(() => {
@@ -74,18 +81,54 @@ const Home = () => {
           console.error('Error checking authentication:', error);
           router.push('/login');
         }
+        console.log("checked for local")
       };
   
       checkAuthentication();
     }, []);
 
+    useEffect(() => {
+      const checkUser = async () => {
+        try {
+          const response = await fetch('/api/user');
+          if (response.ok) {
+            const data = await response.json();
+            dispatch(setUSER({
+              displayName: data.user.fullname,
+              email: data.user.email,
+            })) 
+            console.log(data.user)
+          }
+        } catch (error) {
+          console.error('Error checking authentication:', error);
+          router.push('/login');
+        }
+        console.log("checked for User")
+        
+      };
+  
+      checkUser();
+    }, []);
+
     
     const renderedComponent = useMemo(() => {
-      if (isLoggedIn) 
-        return <LoggedInHomePage />;
-      else 
-        return <NonLoggedInHomePage />;
+      
+        if (isLoggedIn) 
+          return (
+            <Suspense >
+              <LoggedInHomePage />;
+            </Suspense>
+          )
+        else 
+          return (
+            <Suspense >
+              <NonLoggedInHomePage />;
+            </Suspense>
+          )
+      
     }, [isLoggedIn]);
+    
+    
 
 
     return renderedComponent;

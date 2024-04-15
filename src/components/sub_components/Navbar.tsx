@@ -144,7 +144,7 @@ const Navbar = () => {
               </Link>
             </li>
             <div className={`self-center ml-4 menu-anime`}>
-              <Link href="/chat">
+              <Link href="/api/chat">
                 <h1>{isMouseOver && `${"Chat"}`}</h1>
               </Link>
             </div>
