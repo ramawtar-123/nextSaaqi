@@ -1,9 +1,8 @@
 "use client"
 
-import React from 'react';
-import Profile from './Profile';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import React from 'react';
 
 interface UserData {
   username: string;

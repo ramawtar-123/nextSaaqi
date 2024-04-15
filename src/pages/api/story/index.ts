@@ -1,92 +1,78 @@
+// pages/api/story/index.js
+
+import AWS from 'aws-sdk';
+import mongoose from 'mongoose';
+import Story from '../../../../models/Story';
 import { NextApiRequest, NextApiResponse } from 'next';
-import dbConnect from '../../../../utils/dbConnect';
-import { ObjectId } from 'mongodb';
-import jwt from 'jsonwebtoken';
-import secretkey from "../../../../config"
-import User from '../../../../models/User';
-import Post from '../../../../models/Post';
-import { MongoClient } from 'mongodb';
-import { decode } from 'punycode';
-import Story from '../../../../models/Story'
 import formidable from 'formidable';
 import fs from 'fs';
-import path from 'path';
-
-const uploadDir = path.join(process.cwd(), 'uploads');
-
-const ensureUploadDirExists = () => {
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir);
-    }
-  };
+import multer from 'multer'
 
 export const config = {
-api: {
+  api: {
     bodyParser: false,
-},
+  },
 };
 
-const client = new MongoClient("mongodb://localhost:27017/")
+const upload = multer({ dest: 'uploads/' });
+
+AWS.config.update({
+  accessKeyId: 'AKIAX6YJWN7CGSPJWC4R',
+  secretAccessKey: '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',
+});
+
+const s3 = new AWS.S3();
+
+
+
+const uploadToS3 = async (file) => {
+    console.log(file);
+  const params = {
+    Bucket: 'saaqibucketdb',
+    Key: file.name,
+    Body: file.buffer,
+    ACL: 'private',
+  };
+
+  try {
+    const response = await s3.upload(params).promise();
+    console.log('File uploaded successfully:', response.Location);
+    return response;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw error;
+  }
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    ensureUploadDirExists();
 
-    const form = new formidable.IncomingForm();
-  form.uploadDir = uploadDir;
-  form.keepExtensions = true;
+  if (req.method === 'PUT') {
+    try {
 
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      res.status(500).json({ error: 'Error parsing form data.' });
-      return;
-    }
-
-    const file = files.file as formidable.File;
-    const oldPath = file.path;
-    const newPath = path.join(uploadDir, file.name);
-
-    fs.rename(oldPath, newPath, (err) => {
+      upload.single('file')(req, res, async (err) => {
         if (err) {
-          console.error('Error moving uploaded file:', err);
-          res.status(500).json({ error: 'Error moving uploaded file.' });
-        } else {
-          res.status(200).json({ success: true });
+          console.error('Error uploading file:', err);
+          return res.status(500).json({ success: false, error: 'Error uploading file' });
         }
+
+      const uploadedFileUrl = await uploadToS3(req.body);
+
+      const newStory = new Story({
+        story: uploadedFileUrl,
+
       });
+      await newStory.save();
+      console.log(req.body);
+
+      res.status(201).json({ success: true, uploadedFileUrl, log: req.body });
     });
-
-    // if(req.method === 'POST'){
-    //     const token = req.cookies.token;
-    //     if(!token){
-    //         return res.json(401).json({ message: 'Unauthorized' });
-    //     }
-
-    //     const decodedToken = jwt.verify(token, secretkey);
-    //     const userId = decodedToken.id;
-
-    //     const { content } = req.body;
-
-    //     try{
-    //         const user = await User.findById(userId);
-    //         if (!user) {
-    //             return res.status(404).json({ message: 'User not found' });
-    //         }
-
-    //         const story = await Story.create({
-    //             story: content,
-    //             user: userId
-    //         })
-
-    //         const populatedUser = await Story.findById(story._id).populate('user')
-
-    //         user.stories.push(story._id);
-    //         await user.save();
-    //         res.status(201).json({ message: 'Post created successfully', post: populatedPost });
-    //     } catch (error) {
-    //       console.error('Error creating post:', error);
-    //       res.status(500).json({ message: 'Internal Server Error' });
-    //     }
-    //   } else {
-    //     res.status(405).json({ message: 'Method Not Allowed' });
-    //   }
+    } catch (error) {
+      console.error('Error handling file upload:', error);
+      res.status(500).json({ success: false, error: 'Error handling file upload' });
+    }
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).json({ success: false, error: `Method ${req.method} Not Allowed` });
+  }
 }
+ 

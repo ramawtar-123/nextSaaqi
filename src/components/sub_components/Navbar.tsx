@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import { logout } from "@/store/actions";
+import { useGSAP } from "@gsap/react";
+import { initializeApp } from 'firebase/app';
+import 'firebase/auth';
+import { getAuth } from "firebase/auth";
+import { gsap } from "gsap";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { colors } from "@mui/material";
-import { gsap, Power3 } from "gsap";
-import { useGSAP } from "@gsap/react";
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/store/actions";
 
 
 

@@ -1,9 +1,8 @@
 "use client"
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link  from 'next/link';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
+
 
 interface WatchStoriesProps {
   user: string;

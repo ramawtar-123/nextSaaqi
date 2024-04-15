@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from 'react';
-import { gsap, Power3 } from 'gsap';
+import React, { useState} from 'react';
+import { gsap } from 'gsap';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react'
 
@@ -63,7 +63,7 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
               id="posttext"
               cols={80}
               rows={3}
-              placeholder="What's in your mind?"
+              placeholder="What's on your mind?"
               className="peer h-[60%] min-h-[50%] w-[75%] resize-none outline outline-0 transition-all disabled:resize-none mt-6 bg-transparent rounded-xl px-6 py-2 no-scrollbar"
             ></textarea>
 

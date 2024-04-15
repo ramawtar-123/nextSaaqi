@@ -3,16 +3,15 @@
 import { useRouter } from "next/navigation";
 import LoggedInHomePage from '../components/LoggedInHomePage';
 import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import * as React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout, toggleDarkMode } from '../store/actions/index';
+import { login, logout } from '../store/actions/index';
 
 
-import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
-import { useFirebase } from '@/context/Firebase';
+import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set } from 'firebase/database'
+import { getDatabase } from 'firebase/database'
 
 
 

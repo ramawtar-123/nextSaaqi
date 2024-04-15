@@ -5,8 +5,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Link from 'next/link';
 
-import { UseSelector, useSelector } from 'react-redux';
-
 interface Post {
   username: string;
   image: string;
