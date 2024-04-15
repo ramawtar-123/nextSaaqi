@@ -3,7 +3,7 @@
 import Login from "@/app/login/page";
 import Register from "@/app/register/page";
 import React, { useRef, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import * as THREE from "three";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +22,7 @@ interface Props {
 
 const NonLoggedInHomePage = () => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const mount = useRef(null);
 
@@ -121,6 +122,52 @@ const NonLoggedInHomePage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const redirectToLogin = () => {
+    window.location.href = "/login";
+  };
+  const redirectToRegister = () => {
+    window.location.href = "/register";
+  };
+  const redirectToPrivacy = () => {
+    window.location.href = "/privacy";
+  };
+  const scrollToAboutUs = () => {
+    const aboutUsSection = document.getElementById("about-us-section");
+    if (aboutUsSection) {
+      window.scrollTo({
+        top: aboutUsSection.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+  const scrollToContactUs = () => {
+    const contactUsSection = document.getElementById("contact-us-section");
+    if (contactUsSection) {
+      window.scrollTo({
+        top: contactUsSection.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+  const scrollToFeature = () => {
+    const featureSection = document.getElementById("feature-section");
+    if (featureSection) {
+      window.scrollTo({
+        top: featureSection.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+  const scrollToHome = () => {
+    const homeSection = document.getElementById("home-section");
+    if (homeSection) {
+      window.scrollTo({
+        top: homeSection.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <>
       <div className="main m-0 p-0 relative">
@@ -129,35 +176,50 @@ const NonLoggedInHomePage = () => {
           <ul className="flex justify-around">
             <li className={pathname == "/" ? "text-zinc-100" : "text-zinc-400"}>
               {" "}
-              <Link href={"/"}>Home</Link>{" "}
+              {/* <Link href={"/"}>Home</Link>{" "} */}
+              <a href="#" onClick={scrollToHome}>
+                Home
+              </a>
             </li>
             <li
-              className={
-                pathname == "/features" ? "text-zinc-100" : "text-zinc-400"
-              }
+            // className={
+            //   pathname == "/features" ? "text-zinc-100" : "text-zinc-400"
+            // }
             >
               {" "}
-              <Link href={"/features"}>Features</Link>{" "}
+              {/* <Link href={"/features"}>Features</Link>{" "} */}
+              <a href="#" onClick={scrollToFeature}>
+                Features
+              </a>
             </li>
             <li
-              className={
-                pathname == "/contact" ? "text-zinc-100" : "text-zinc-400"
-              }
+            // className={
+            //   pathname == "/contact" ? "text-zinc-100" : "text-zinc-400"
+            // }
             >
               {" "}
-              <Link href={"/contact"}>Contact Us</Link>{" "}
+              {/* <Link href={"/contact"}>Contact Us</Link>{" "} */}
+              <a href="#" onClick={scrollToContactUs}>
+                Contact Us
+              </a>
             </li>
             <li
-              className={
-                pathname == "/about" ? "text-zinc-100" : "text-zinc-400"
-              }
+            // className={
+            //   pathname == "about" ? "text-zinc-100" : "text-zinc-400"
+            // }
             >
-              {" "}
-              <Link href={"/about"}>About</Link>{" "}
+              <a href="#" onClick={scrollToAboutUs}>
+                About Us
+              </a>
+
+              {/* <Link href = {"/about"} >About</Link> */}
             </li>
           </ul>
         </div>
-        <div className="title mt-28 text-center text-[6rem] tracking-[1rem] text-white">
+        <div
+          id="home-section"
+          className="title mt-28 text-center text-[6rem] tracking-[1rem] text-white"
+        >
           SAAQI
           <h1 className="mt-0 text-[1.1rem] tracking-widest text-zinc-400">
             Make your confession
@@ -175,7 +237,7 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex   items-center px-12 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>Bitcoin</span>
+                <span>200+ </span>
                 <svg
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
@@ -192,7 +254,7 @@ const NonLoggedInHomePage = () => {
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 text-sm ml-10 mt-3">choose chain</h6>
+              <h6 className="text-gray-50 text-sm ml-10 mt-3">total users</h6>
             </div>
 
             <div className="box2 w-64  h-20">
@@ -200,7 +262,7 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex items-center px-20 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>Bitcoin</span>
+                <span>120+</span>
                 <svg
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
@@ -217,7 +279,7 @@ const NonLoggedInHomePage = () => {
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 mt-3 text-sm ml-20">Amount</h6>
+              <h6 className="text-gray-50 mt-3 text-sm ml-20">total online</h6>
             </div>
 
             <div className="box3">
@@ -225,8 +287,10 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex items-center px-8 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>Bitcoin</span>
+                <span>16 April 2024</span>
+
                 <svg
+                  type="dropdown"
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
                   fill="none"
@@ -242,65 +306,128 @@ const NonLoggedInHomePage = () => {
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 mt-3 text-sm">Withdrawal date</h6>
+              <h6 className="text-gray-50 mt-3 ml-10 text-sm">
+                withdrawal date
+              </h6>
             </div>
           </div>
 
           <div className=" w-96 mx-auto ">
-            <div className="circle text-center bg-gradient-to-r from-teal-400 to-yellow-200 rounded-full w-20 h-20 mt-24 m-auto"></div>
-            <h1 className="text-gray-50 text-6xl  mt-28 m-auto ">CONCLUSION</h1>
+            <div className="circle text-center bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full w-20 h-20 mt-24 m-auto"></div>
+            <h1 className="text-gray-50 text-6xl  mt-28 m-auto  ">
+              INSPIRATION
+            </h1>
           </div>
 
           <div className="BadaBoxes flex m-20 justify-evenly">
-            <div className="box1">
-              <div className="box text-gray-50 tracking-wider w-[20vw] h-[20vw] bg-gradient-to-r from-slate-500 to-slate-800">
-                BTS $31.67149 <sub>+429.42</sub>
+            <div className="box1  ">
+              <div className="box text-gray-50 tracking-wider rounded-lg w-[20vw] h-[20vw] bg-gradient-to-r from-slate-500 to-slate-800">
+                <div className=" rounded-md flex flex-col text-center mx-auto  justify-evenly item-center text-gray-50 bg-[#111827]  tracking-wider w-[20vw] h-[20vw]">
+                  <div className="button1  ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-orange-400 to-rose-400 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]  cursor-pointer">
+                    Highlights
+                  </div>
+                  <div className="button1 ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-orange-400 to-rose-400 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] cursor-pointer">
+                    Analytics
+                  </div>
+                  <div className="button1 ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-orange-400 to-rose-400 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] cursor-pointer">
+                    Direct Message
+                  </div>
+                  <div className="button1 ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-orange-400 to-rose-400 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] cursor-pointer">
+                    Posts
+                  </div>
+                  <div></div>
+                </div>
               </div>
-              <h2 className="text-gray-50 ml-20 mt-4 text-xl">
-                Supposed Price
+              <h2 className="text-gray-50 ml-14 mt-4 text-xl">
+                Aesthetic Features
               </h2>
             </div>
 
             <div className="box2  ">
-              <div className="box flex flex-col text-center mx-auto  justify-evenly item-center text-gray-50 bg-[#111827]  tracking-wider w-[20vw] h-[20vw] ">
+              <div className="box rounded-lg flex flex-col text-center mx-auto  justify-evenly item-center text-gray-50 bg-[#111827]  tracking-wider w-[20vw] h-[20vw] ">
                 <div className="button1 ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-gray-700 to-black">
-                  USD 10,50002
+                  Select Your Tier
                 </div>
-                <div className="button2 mb-2 ml-6 w-64 h-14  items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-b from-gray-900 to-gray-600">
-                  2.4394
+                <div className="button2 mb-2 w-64 h-14 ">
+                  <select
+                    className="text-white bg-black opactity-0 border-none mb-2 ml-6 w-64 h-14 text-lg items-center pl-20 px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-b from-gray-900 to-gray-600"
+                    name="select"
+                    id="users"
+                  >
+                    <option className="border-none pl-6 bg-black" value="150">
+                      Premium
+                    </option>
+                    <option className="border-none bg-black" value="200">
+                      Standard
+                    </option>
+                  </select>
                 </div>
-                <div className="button3 mt-4 ml-6 w-64 rounded-full h-14 items-center px-8 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-pink-600 hover:bg-gradient-to-r from-fuchsia-500 to-cyan-500 focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150">
-                  BUY CRYPTO
+                <div
+                  onClick={redirectToLogin}
+                  // className="button3 mt-4 ml-6 w-64 rounded-full h-14 items-center px-8 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-pink-600 hover:bg-gradient-to-r from-fuchsia-500 to-cyan-500 focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
+                >
+                  <button
+                    type="button"
+                    className="text-white mt-4 ml-4 w-64 rounded-full h-14 items-center px-8 py-4 border border-transparent text-base leading-6 font-medium text-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800   me-2 mb-2"
+                  >
+                    LOGIN
+                  </button>
                 </div>
               </div>
-              <h2 className="text-gray-50 ml-20 mt-4 text-xl">
-                Starting Investmented
+              <h2 className="text-gray-50 ml-14 mt-4 text-xl">
+                Start your Journey
               </h2>
             </div>
 
             <div className="box3">
-              <div className="box text-gray-50 tracking-wider w-[20vw] h-[20vw] bg-gradient-to-r from-slate-900 to-slate-700">
-                BTS $31.67149 <sub>+429.42</sub>
+              <div className="box  shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)] rounded-lg text-gray-50 tracking-wider w-[20vw] h-[20vw] bg-gradient-to-r from-slate-900 to-slate-700">
+                <div className="flex pt-2 flex-col gap-3">
+                  <button className="shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                      Privacy
+                    </span>
+                  </button>
+                  <button className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                      Confidentiality
+                    </span>
+                  </button>
+                  <button className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                      Protection
+                    </span>
+                  </button>
+                  <button className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                      Secrecy
+                    </span>
+                  </button>
+                </div>
               </div>
-              <h2 className="text-gray-50 ml-20 mt-4 text-xl">
-                Supposed Profits
-              </h2>
+              <div className="text-gray-50 ml-20 mt-4 cursor-pointer text-xl">
+                Privacy and Safety
+              </div>
             </div>
           </div>
           {/* JAKARTA TYPOGRAPHY */}
           <div className="description pt-10 bg-black text-white justify-center text-center grid gap-20 ">
-            <h1 className="text-4xl">TYPOGRAPHY</h1>
-            <h1 className="text-6xl">PLUS JAKARTA SANS</h1>
+            <h1 className="text-4xl">EXCELLENCY</h1>
+            <h1
+              id="about-us-section"
+              className="text-6xl brightness-200  contrast-200 bg-gradient-to-t from-pink-500 via-violet-600 to-rose-600 bg-clip-text text-transparent "
+            >
+              SAAQI
+            </h1>
             <p className="font-[sathosi] font-2xl">
               <b className="font-[Time-new-Roman]  text-xl">
-                Introducing Saaqi,{" "}
+                Introducing Saaqi{" "}
               </b>{" "}
-              a vibrant social media platform designed to <br /> connect people
-              through shared experiences and creative expression. <br /> Saaqi
-              offers a plethora of features to enrich users' <br /> digital
+              <br /> A vibrant social media platform designed to <br /> connect
+              people through shared experiences and creative expression. <br />{" "}
+              Saaqi offers a plethora of features to enrich users' digital
               interactions. <br />
               From captivating photo band video sharing to immersive Stories and
-              live streaming, <br /> Saaqi empowers users to express themselves
+              live streaming, Saaqi empowers users to express themselves
               authentically. <br /> <br />
               <br />{" "}
               <p className="text-2xl">
@@ -308,16 +435,25 @@ const NonLoggedInHomePage = () => {
                 connection, and community.
               </p>
             </p>
-            <h3 className="text-3xl">COLOR PALETTE</h3>
+            <h3 className="text-3xl bg-gradient-to-t from-teal-300 via-rose-500 to-violet-800 bg-clip-text text-transparent">
+              ADVANCE
+            </h3>
             <div className="btns flex justify-center text-center gap-20">
-              <button className="color bg-blue-800 rounded-full py-4 px-20 text-center bg-center ">
-                blue
+              <button className="color bg-gradient-to-r from-teal-400 to-yellow-100 rounded-full py-4 px-20 text-center bg-center ">
+                Documentation
               </button>
-              <button className="color bg-pink-800 rounded-full py-4 px-20 text-center bg-center">
-                pink
+              <button
+                onClick={redirectToRegister}
+                className="color bg-gradient-to-r from-purple-500 to-teal-500 rounded-full py-4 px-20 text-center bg-center"
+              >
+                Register
               </button>
-              <button className="color bg-purple-800 rounded-full py-4 px-20 text-center bg-center ">
-                purple
+              <button
+                onClick={redirectToPrivacy}
+                style={{ cursor: "pointer" }}
+                className="color bg-gradient-to-r from-yellow-400 to-rose-600 rounded-full py-4 px-20 text-center bg-center "
+              >
+                Privacy Policy
               </button>
             </div>
           </div>
@@ -325,10 +461,14 @@ const NonLoggedInHomePage = () => {
           {/* tricky and wizardry first */}
           <div className="flex mt-32 justify-around bg-black text-white">
             <div className="left-vala ml-20 flex flex-col gap-20">
-              <h1 className="text-6xl mt-20 leading-20">
+              <h1
+                id="feature-section"
+                className="text-6xl capitalize leading-32 mt-20 leading-20"
+              >
                 {" "}
-                WEBFLOW TRICKS <br /> and <br />
-                WIZARDRY{" "}
+                🌟 Radiate positivity, <br />
+                🌍 Inspire wanderlust, <br />
+                🤝 Connect.
               </h1>
               <p className="leading-loose">
                 Its sleek interface encourages <br /> seamless navigation and
@@ -350,41 +490,53 @@ const NonLoggedInHomePage = () => {
 
             <div className="w-96 h-96 mt-20">
               <img
-                src="https://images.unsplash.com/photo-1712876718842-5b7d59ad453b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8"
+                src="https://images.unsplash.com/photo-1495001258031-d1b407bc1776?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJpZW5kcyUyMHdpdGglMjBzb2NpYWwlMjBtZWRpYXxlbnwwfHwwfHx8MA%3D%3D"
                 alt=""
               />
             </div>
           </div>
 
           {/* tricky and wizardry second*/}
-          <div className="flex mt-32 justify-around bg-black text-white">
+          <div className="flex  mt-32 justify-around bg-black text-white">
             <div className="w-96 h-32 mt-20">
               <img
-                src="https://images.unsplash.com/photo-1712371962703-3d53845ab565?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8"
+                src="https://images.unsplash.com/photo-1522098543979-ffc7f79a56c4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZyaWVuZHN8ZW58MHx8MHx8fDA%3D"
                 alt=""
               />
             </div>
 
             <div className="left-vala ml-20 flex flex-col gap-20">
               <h1 className="text-6xl mt-20 leading-20">
-                {" "}
-                WEBFLOW TRICKS <br /> and <br />
-                WIZARDRY{" "}
+                Explore, Dream, Discover 🌍
               </h1>
               <p>
-                Lorem ipsum dolor, sit amet consectetur <br />
-                adipisicing elit. Explicabo consequatur <br /> laboriosam
-                voluptatibus voluptas ipsa officibr <br />a nam rerum quo,
-                sapiente harum atque, architecto facere!
+                Embracing the magic of everyday moments! 🌟
+                <br /> Life's beauty lies in the simplest of things - a morning
+                sunrise, <br /> a cup of coffee shared with loved ones, <br />{" "}
+                or a walk in nature's embrace. <br /> Each day brings new
+                adventures and opportunities to create lasting memories. <br />
+                Let's savor these moments, cherish the laughter, and <br />{" "}
+                celebrate the journey together! 📸 Whether <br />
+                it's exploring new places, indulging in delicious meals,
+                <br /> or finding joy in small acts of kindness, let's embrace
+                the beauty that surrounds us. <br />
+                Join me on this journey of discovery and gratitude,
+                <br /> where every moment is a chance to experience the wonder
+                of life. <br /> Here's to living fully, laughing often, and
+                loving endlessly! <br />
+                💖✨ #EmbraceTheMagic #CherishTheJourney #LiveLaughLove !
               </p>
               <button className="button3 mt-4 w-96 rounded-md h-14 items-center px-10 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-purple-600 hover:bg-gradient-to-r from-fuchsia-500">
-                GLASSMORPHISM TUTORIAL
+                EXPLORE
               </button>
             </div>
           </div>
 
           {/* footer */}
-          <footer className="bg-black text-white justify-center text-center mt-32">
+          <footer
+            id="contact-us-section"
+            className="bg-black  text-white justify-center text-center py-32"
+          >
             <div className="footer-row flex text-wrap justify-between gap-10 p-10">
               <div className="footer-col">
                 <h1 className="text-white size-3 ml-24 font-semibold font-sans">
@@ -428,7 +580,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm"
                       href="#"
                     >
-                      Collections
+                      Career
                     </a>
                   </li>
                   <li>
@@ -475,7 +627,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Free Design
+                      Blog
                     </a>
                   </li>
                   <li>
@@ -483,7 +635,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Free Design
+                      Android
                     </a>
                   </li>
                   <li>
@@ -491,14 +643,14 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Free Design
+                      Windows
                     </a>
                   </li>
                 </ul>
               </div>
               <div className="footer-col">
                 <h1 className="text-white size-3 font-semibold font-sans">
-                  Explore
+                  Legal
                 </h1>
                 <ul className="links mt-20 list-none">
                   <li>
@@ -506,7 +658,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Latest Design
+                      Privacy
                     </a>
                   </li>
                   <li>
@@ -514,7 +666,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Themes
+                      Licensing
                     </a>
                   </li>
                   <li>
@@ -530,7 +682,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Free Design
+                      Discord Server
                     </a>
                   </li>
                   <li>
@@ -538,7 +690,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Free Design
+                      Brand Center
                     </a>
                   </li>
                   <li>
@@ -546,7 +698,7 @@ const NonLoggedInHomePage = () => {
                       className="no-underline text-slate-400 hover:text-white text-sm "
                       href="#"
                     >
-                      Free Design
+                      Terms & Conditions
                     </a>
                   </li>
                 </ul>
@@ -556,8 +708,10 @@ const NonLoggedInHomePage = () => {
                   Newletter
                 </h1>
                 <p className="mt-20 mr-20 text-sm text-slate-200">
-                  Lorem sfklsj kj slkj ipsum dolor sit ametbr consectetur <br />{" "}
-                  slkfj sjfkl ksjfks adipisicing kjsfit. Ab ad perferendis in?
+                  Saqi brings the latest, sip by sip, Stay refreshed with <br />{" "}
+                  our news, don't skip. Updates, trends, and <br /> stories
+                  untold, <br />
+                  Subscribe now, let the tales unfold. <br />
                 </p>
                 <form className="flex mt-4   gap-7" action="#">
                   <input
@@ -602,6 +756,9 @@ const NonLoggedInHomePage = () => {
                 </div>
               </div>
             </div>
+            <h1 className="text-white  mt-24">
+              © 2024 Saaqi. All Rights Reserved.
+            </h1>
           </footer>
         </div>
       </div>
