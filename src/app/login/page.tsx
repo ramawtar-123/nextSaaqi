@@ -39,7 +39,6 @@ const Login = () => {
       });
 
       if (response.ok) {
-        // Optionally, you can redirect or perform other actions after successful login
         console.log('User logged in successfully');
         router.push("/");
       } else {

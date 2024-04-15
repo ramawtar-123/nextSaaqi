@@ -3,6 +3,8 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const SET_USER = 'SET_USER'
+export const SET_USERFULLINFO = 'SET_USERFULLINFO'
+
 
 export const login = () => ({
   type: LOGIN,
@@ -19,7 +21,18 @@ export const toggleDarkMode = () => ({
 export const setUSER = (user) => ({
   type: SET_USER,
   payload: {
-    displayName: user.displayName,
+    fullname: user.displayName,
     email: user.email,
+  }
+})
+
+export const setUSERFULLINFO = (user) => ({
+  type: SET_USERFULLINFO,
+  payload: {
+    fullname: user.fullname,
+    email: user.email,
+    username: user.username,
+    bio: user.bio,
+    profilePicture: user.profilePicture
   }
 })

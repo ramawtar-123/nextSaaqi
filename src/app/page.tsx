@@ -6,13 +6,14 @@ import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useMemo } from "react";
 import * as React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout, setUSER } from '../store/actions/index';
+import { login, logout, setUSER, setUSERFULLINFO } from '../store/actions/index';
 import {Suspense} from 'react'
 
 
 import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database'
+import axios from "axios";
 
 
 
@@ -55,13 +56,23 @@ const Home = () => {
     const router = useRouter();
 
     useEffect(() => {
-      onAuthStateChanged(firebaseAuth, (user) => {
+      onAuthStateChanged(firebaseAuth, async (user) => {
         if(user){
           dispatch(login())
           dispatch(setUSER({
-            displayName: user.displayName,
+            fullname: user.displayName,
             email: user.email,
           }))  
+          
+          const userinfo = await axios.get(`/api/findUserByEmail?email=${user.email}`)
+          
+          dispatch(setUSERFULLINFO({
+            fullname: userinfo.data.user.fullname,
+            email: userinfo.data.user.email,
+            username: userinfo.data.user.username,
+            bio: userinfo.data.user.bio,
+            profilePicture: userinfo.data.user.profilePicture
+          })) 
         }
         else{
           dispatch(logout())
@@ -69,6 +80,9 @@ const Home = () => {
         console.log("checked user")
       })
     }, [])
+
+
+    const temp = useSelector(state => state.rootReducer.fullUserInfo)
 
 
 
@@ -96,7 +110,7 @@ const Home = () => {
           if (response.ok) {
             const data = await response.json();
             dispatch(setUSER({
-              displayName: data.user.fullname,
+              fullname: data.user.fullname,
               email: data.user.email,
             })) 
             console.log(data.user)

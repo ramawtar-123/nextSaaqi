@@ -1,10 +1,11 @@
 // reducers.js
-import { LOGIN, LOGOUT, TOGGLE_DARK_MODE, SET_USER } from '../actions/index';
+import { LOGIN, LOGOUT, TOGGLE_DARK_MODE, SET_USER, SET_USERFULLINFO } from '../actions/index';
 
 const initialState = {
   isLoggedIn: false,
   isDarkMode: true,
-  user: {}
+  user: {},
+  fullUserInfo: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -28,6 +29,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload
+      };
+    case SET_USERFULLINFO:
+      return {
+        ...state,
+        fullUserInfo: action.payload
       }
     default:
       return state;

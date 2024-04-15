@@ -20,6 +20,28 @@ const firebaseConfig = {
   databaseURL: "https://saaqi-194de-default-rtdb.firebaseio.com/"
 };
 
+interface userData {
+    fullname:  String,
+    username: String,
+    email: String,
+    profilePicture: String,
+    bio: String,
+    likes: [
+       {}
+    ],
+    posts:[
+      {}
+   ],
+    stories: [
+      {}
+   ],
+    followers: [
+      {}
+   ],
+    followings: [
+      {}
+   ],
+}
 
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
@@ -33,7 +55,7 @@ function Account() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   let [googleLogged, setGoogleLogged] = useState<boolean>(false);
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
@@ -92,14 +114,14 @@ function Account() {
         </div>
         <div className="information w-[20rem] h-[8rem] justify-start">
           <div className='flex gap-8'>
-            <h1 className="text-2xl">{googleLogged ? user.displayName : userData.username}</h1>
+            <h1 className="text-2xl">{googleLogged ? user.displayName : userData.fullname}</h1>
             <button>Edit Profile</button>
           </div>
 
           <div className='flex gap-7'>
             <h1>{}</h1> <span className='ml-[-7%]'>posts</span>
-            <h1>{userData.followers }</h1> <span className='ml-[-7%]'>followers</span>
-            <h1>{userData.followings }</h1> <span className='ml-[-7%]'>followings</span>
+            <h1>{0 }</h1> <span className='ml-[-7%]'>followers</span>
+            <h1>{0 }</h1> <span className='ml-[-7%]'>followings</span>
           </div>
 
           <h1 className='mt-4 font-semibold'>{userData.name }</h1>

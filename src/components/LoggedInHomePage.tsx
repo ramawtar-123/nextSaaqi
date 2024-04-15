@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -13,11 +13,79 @@ import Navbar from "./sub_components/Navbar";
 import { useSelector } from "react-redux";
 
 
+import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { useFirebase } from '@/context/Firebase';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set } from 'firebase/database'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
+  authDomain: "saaqi-194de.firebaseapp.com",
+  projectId: "saaqi-194de",
+  storageBucket: "saaqi-194de.appspot.com",
+  messagingSenderId: "178575618437",
+  appId: "1:178575618437:web:3a0b80ddb4da44ac04d4ec",
+  measurementId: "G-L17RZF5ZKF",
+  databaseURL: "https://saaqi-194de-default-rtdb.firebaseio.com/"
+};
+
+
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseAuth = getAuth(firebaseApp);
+const database = getDatabase(firebaseApp);
+
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
+
+
+
 
 function Homepage() {
 
   const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
   const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
+
+  const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
+  let [googleLogged, setGoogleLogged] = useState<boolean>(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (user) => {
+      if(user){
+        setUser(user);
+        setGoogleLogged(true)
+      }
+      else{
+        setUser("");
+      }
+    })
+  }, [])
+
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/user/');
+        if (response.ok) {
+          const data = await response.json();
+          
+          setUserData(data.user); 
+        } else {
+          console.error('Failed to fetch user data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
 
   useGSAP(() => {
     gsap.from(".friends", {

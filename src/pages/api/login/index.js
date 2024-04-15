@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid username or password' });
+      return res.status(401).json({ success: false, message: 'User Not Found' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);

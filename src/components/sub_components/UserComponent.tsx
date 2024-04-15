@@ -2,40 +2,78 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 interface UserData {
-  username: string;
-  image: string;
-  about: string;
-  friend: boolean;
+  fullname: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmpassword?: string;
+  profilePicture: string;
+  bio: string;
+  likes: {
+      post: string;
+      createdAt: Date;
+  }[];
+  posts: {
+      post: string;
+      createdAt: Date;
+  }[];
+  stories: {
+      story: string;
+      createdAt: Date;
+  }[];
+  followers: {
+      user: string;
+      createdAt: Date;
+  }[];
+  followings: {
+      user: string;
+      createdAt: Date;
+  }[];
+  createdAt: Date;
 }
+
 
 interface UserAccountProps {
   isDarkMode: boolean;
 }
 
 const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
-  const userData: UserData[] = [
-    {
-      username: "John Doe",
-      image: "https://images.unsplash.com/photo-1682686581498-5e85c7228119?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      about: "UI/UX designer",
-      friend: false
-    },
-    {
-      username: "Alex Smith",
-      image: "https://images.unsplash.com/photo-1679065949530-7bb1fba3ccb3?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      about: "DevOps Engineer",
-      friend: false
-    },
-    {
-      username: "Saul goodman",
-      image: "https://images.unsplash.com/photo-1682685797703-2bb22dbb885b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      about: "Backend Engineer",
-      friend: false
-    },
-  ];
+
+  const [userData, setUserData] = useState<UserData[]>([]);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const USER = useSelector(state => state.rootReducer.user);
+  const router = useRouter()
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    // const currentUser = USER.email
+
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(`/api/userslist`)
+        if (response.status !== 200) {
+          throw new Error('Failed to fetch feed');
+        }
+        const data = await response.data;
+        const updatedData = data.map(user => ({ ...user, isFollowing: false }));
+        setUserData(updatedData);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
 
   useGSAP(() => {
     gsap.from(".friends-animation", {
@@ -46,27 +84,63 @@ const UserAccount: React.FC<UserAccountProps> = ({ isDarkMode }) => {
     });
   });
 
-  const handleFriendClick = (index: number) => {
-    const updatedData = [...userData];
-    updatedData[index].friend = !updatedData[index].friend;
-    // Update state or perform any other actions with the updated data
+  // const [userToFollow, setUserToFollow] = useState({});
+  const userinfo = useSelector(state => state.rootReducer.user);
+  const FULLUSER = useSelector(state => state.rootReducer.fullUserInfo)
+
+  let currentuserinfo = {};
+  let newuserinfo = "";
+
+  let containsNumber123;
+
+  const handleFollowClick = async (val, i) => {
+    try {
+      setLoading(true);
+      
+      const newUserinfo = await axios.get(`api/findUserByEmail?email=${userinfo.email}`)
+      const newVal = await axios.get(`api/findUserByEmail?email=${val.email}`)
+
+      const followUserId = userData[i]._id;
+
+      const res = await axios.post('/api/followUser', {
+        userId: newUserinfo.data.user._id,
+        followUserId: newVal.data.user._id,
+      });
+
+      currentuserinfo = newUserinfo.data.user;
+      newuserinfo = newVal.data.user._id;
+
+      if(res.status === 200){
+        setUserData(prevData => {
+          const updatedData = [...prevData];
+          updatedData[i].isFollowing = !updatedData[i].isFollowing;
+          return updatedData;
+        });
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error following user:', error);
+      setLoading(false);
+    }
   };
+
 
   return (
     <>
       {userData.map((elem, index) => (
-        <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} hover:drop-shadow-[0_20px_20px_rgba(58,20,80,0.65)]  friends-animation users w-[80%] h-24 rounded `}>
+        <div key={index} className={`${isDarkMode ? "dark-mode-component-bg" : "light-mode-component-bg"} hover:drop-shadow-[0_20px_20px_rgba(58,20,80,0.65)]  friends-animation users w-[95%] h-24 rounded `}>
           <div className="flex">
             <div className="profile">
               <button className='w-12 h-12 flex justify-center items-center rounded-full m-5 ml-8 mr-3 min-w-12'>
-                <img className="object-cover overflow-hidden w-full h-full rounded-full" src={elem.image} alt={`Profile of ${elem.username}`} />    
+                <img className="object-cover overflow-hidden w-full h-full rounded-full" src={elem.profilePicture} alt={`Profile of ${elem.username}`} />    
               </button>
             </div>
             <div className="flex-col">
-              <h1 className='text-semibold mt-3'>{elem.username}</h1>
-              <h4 className='text-xs'>{elem.about}</h4>
-              <button onClick={() => handleFriendClick(index)} className='w-16 h-6 mt-2 rounded text-[10px] global-theme-color text-white'>
-                {`${elem.friend ? "Remove friend" : "Add friend"}`}
+              <h1 className='text-semibold mt-3'>{elem.fullname}</h1>
+              <h4 className='text-xs'>{elem.bio}</h4>
+              
+              <button onClick={() => handleFollowClick(elem, index)} className='w-16 h-6 mt-2 rounded text-[10px] global-theme-color text-white'>
+                {`${ elem.isFollowing  ? "Unfollow" : "Follow"}`}
               </button>
             </div>
           </div>

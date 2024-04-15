@@ -16,8 +16,6 @@ interface FeedProps {
   isDarkMode: boolean;
 }
 
-
-
 function Feed({ isDarkMode }: FeedProps) {
   
 

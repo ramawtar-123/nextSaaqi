@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { FacebookAuthProvider } from "firebase/auth";
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, toggleDarkMode, setUSER } from '../../store/actions';
+import { Fullscreen } from 'lucide-react';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -47,11 +48,32 @@ const page = () => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if(user){
         dispatch(setUSER({
-          displayName: user.displayName,
+          fullname: user.displayName,
           email: user.email,
         }))  
-        dispatch(login())
-        return false;
+
+        fetch("/api/addGoogleUser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullname: user.displayName,
+            email: user.email,
+          }),
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log("User created successfully", response.user);
+            dispatch(login())
+          } else {
+            console.error("Error creating user");
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
+
       }
     })
   }, [])
@@ -69,7 +91,7 @@ const page = () => {
     .then((result) => {
       const user = result.user;
       dispatch(setUSER({
-        displayName: user.displayName,
+        fullname: user.displayName,
         email: user.email,
       }));
       dispatch(login());

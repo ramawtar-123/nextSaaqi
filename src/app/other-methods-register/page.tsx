@@ -12,6 +12,7 @@ import { FacebookAuthProvider } from "firebase/auth";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, toggleDarkMode, setUSER } from '../../store/actions';
+import { Fullscreen } from 'lucide-react';
 
 
 const firebaseConfig = {
@@ -48,7 +49,7 @@ const page = () => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if(user){
         dispatch(setUSER({
-          displayName: user.displayName,
+          fullname: user.displayName,
           email: user.email,
         }))  
         dispatch(login())
@@ -72,7 +73,7 @@ const page = () => {
     .then((result) => {
       const user = result.user;
       dispatch(setUSER({
-        displayName: user.displayName,
+        fullname: user.displayName,
         email: user.email,
       }));
       dispatch(login());
@@ -87,9 +88,6 @@ const page = () => {
     signInWithPopup(firebaseAuth, facebookProvider)
   }
 
-
-
-  
 
 
   return (
