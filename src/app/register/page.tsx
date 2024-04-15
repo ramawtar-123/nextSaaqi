@@ -91,7 +91,7 @@ function Register() {
                         </a>
                       </h3>
                     </h1>
-                    <div className="gap-5 flex mr-10 mb-[-9px] ml-[3rem] ">
+                    <div className="gap-5 flex mr-10 mb-[-9px] ">
                       <input
                         type="text"
                         name="fullname"
@@ -99,7 +99,7 @@ function Register() {
                         onChange={handleChange}
                         id="name"
                         placeholder="Full Name"
-                        className="first w-[37%] h-9 pl-5 font-[14px] text-[14px]  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="first w-[45%] h-9 pl-5 font-[14px] text-[14px]  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                       <input
                         type="text"
@@ -141,7 +141,7 @@ function Register() {
                       />
                     </div>
                     <div className="flex w-full mt-[-20px] ml-28 gap-6">
-                      <Link href={"/other-methods"} className="method w-[30%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
+                      <Link href={"/other-methods"} className="method w-[28%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
                       
                       <input
                         type="submit"

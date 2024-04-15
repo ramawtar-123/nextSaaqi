@@ -55,9 +55,7 @@ const page = () => {
       }
     })
   }, [])
-  console.log(user);
 
-  console.log(user)
 
   
   const redirectToMain = () => {
