@@ -4,7 +4,6 @@ import React, { useState} from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react'
-import { useSelector } from 'react-redux';
 
 
 interface PostProps {
@@ -12,7 +11,6 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ isDarkMode }) => {
-  const FULLUSER = useSelector(state => state.rootReducer.fullUserInfo)
   const [postContent, setPostContent] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +51,7 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
             <Link href="/account">
              
                 <div className='w-12 h-12 flex justify-center items-center rounded-full m-5 ml-8 mr-3 min-w-12'>
-                  <img className='object-cover w-full h-full rounded-full ' src={FULLUSER.profilePicture} />
+                  <img className='object-cover w-full h-full rounded-full ' src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
                 </div>
             
             </Link>

@@ -83,6 +83,7 @@ const Home = () => {
 
 
     const temp = useSelector(state => state.rootReducer.fullUserInfo)
+    console.log("USER FOUND: ", temp)
 
 
 

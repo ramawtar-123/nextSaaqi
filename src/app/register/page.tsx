@@ -3,9 +3,27 @@
 import { useState, ChangeEvent, FormEvent, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react';
+
 
 function Register() {
   const router = useRouter();
+
+  useGSAP(() => {
+    var tl = gsap.timeline();
+    tl.from(".gsap", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: 'gsap',
+        scroller: "el",
+        scrub: 3
+      }
+    });
+  });
 
   const [formData, setFormData] = useState({
     fullname: "",
@@ -51,22 +69,34 @@ function Register() {
           <div className="back h-full w-[100%]">
             <div className="h-10 w-[50%] flex  justify-between text-white ">
               <div className="logo h-10 w-10 rounded-full ml-32 mt-9 object-cover ">
-                <h1 className="ml-14 text-2xl font-bold">
+                <h1 className="ml-14 text-2xl gsap font-bold">
                   SAAQI
                 </h1>
               </div>
               <div className="flex gap-20 mr-8 mt-10 ">
                 <a
                   href=""
-                  className="text-slate-400 hover:text-purple-700 "
+                  className="text-slate-400 gsap hover:text-purple-700 "
                 >
                   Home
                 </a>
                 <a
                   href=""
-                  className="text-slate-400 hover:text-purple-700"
+                  className="text-slate-400 gsap hover:text-purple-700"
                 >
                   Join
+                </a>
+                <a
+                  href=""
+                  className="text-slate-400 gsap hover:text-purple-700 "
+                >
+                  Features
+                </a>
+                <a
+                  href=""
+                  className="text-slate-400 gsap hover:text-purple-700"
+                >
+                  Contact Us
                 </a>
               </div>
             </div>
@@ -75,17 +105,17 @@ function Register() {
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col justify-center items-center gap-5 text-white  ">
                     <h1 className=" ml-[-1rem] mt-[5rem] font-semibold">
-                      <h2 className="text-[13px] text-gray-400 ] ">
+                      <h2 className="text-[13px] text-gray-400 ] gsap ">
                         STEP INTO THE WORLD OF CONFESSIONS
                       </h2>
-                      <h1 className="w-50% text-[45px]  ">
+                      <h1 className="w-50% text-[45px] gsap ">
                         Create New Account
                       </h1>
-                      <h3 className="text-[14px] flex">
+                      <h3 className="text-[14px] gsap flex">
                         Already have an Account?
                         <a
                           href="/login"
-                          className="text-purple-700 font-semibold ml-2"
+                          className="text-purple-700 font-semibold gsap ml-2"
                         >
                           Log In
                         </a>
@@ -99,7 +129,7 @@ function Register() {
                         onChange={handleChange}
                         id="name"
                         placeholder="Full Name"
-                        className="first w-[45%] h-9 pl-5 font-[14px] text-[14px]  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="first w-[45%] gsap h-9 pl-5 font-[14px] text-[14px]  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                       <input
                         type="text"
@@ -108,7 +138,7 @@ function Register() {
                         onChange={handleChange}
                         id="uname"
                         placeholder="UserName"
-                        className="last w-[35%] h-9 p-4 pl-5 text-[14px] focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="last w-[35%] gsap h-9 p-4 pl-5 text-[14px] focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                     </div>
                     <div className="gap-5 flex-col ml-14 ">
@@ -119,7 +149,7 @@ function Register() {
                         onChange={handleChange}
                         id="email"
                         placeholder="Email"
-                        className="email w-[69%] h-9 text-[14px] mb-[0.8rem]  pl-6 mr-28 focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl "
+                        className="email w-[69%] gsap h-9 text-[14px] mb-[0.8rem]  pl-6 mr-28 focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl "
                       />                
                       <input
                         type="password"
@@ -128,7 +158,7 @@ function Register() {
                         onChange={handleChange}
                         id="password"
                         placeholder="Password"
-                        className="password w-[69%] h-9 text-[14px] pl-6  mb-[0.8rem] focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="password w-[69%] gsap h-9 text-[14px] pl-6  mb-[0.8rem] focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                       <input
                         type="password"
@@ -137,16 +167,16 @@ function Register() {
                         onChange={handleChange}
                         id="password"
                         placeholder="Confirm Password"
-                        className="password w-[69%] h-9 text-[14px] pl-6 mr-28  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
+                        className="password w-[69%] gsap h-9 text-[14px] pl-6 mr-28  focus:outline-none placeholder-gray-200 bg-slate-800 rounded-xl"
                       />
                     </div>
                     <div className="flex w-full mt-[-20px] ml-28 gap-6">
-                      <Link href={"/other-methods"} className="method w-[28%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
+                      <Link href={"/other-methods"} className="method gsap w-[28%] h-9 p-2 text-center mt-7 bg-slate-500 text-white rounded-full text-[13px] font-semibold">Change Method</Link>
                       
                       <input
                         type="submit"
                         value="Next"
-                        className="next w-[30%] h-9 p-2 mt-7 bg-purple-900 text-white rounded-full text-[13px] font-semibold "
+                        className="next w-[30%] h-9 p-2 mt-7 gsap bg-purple-900 text-white rounded-full text-[13px] font-semibold "
                       />
                     </div>
                   </div>

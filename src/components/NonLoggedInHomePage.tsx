@@ -15,6 +15,9 @@ import {
   faGithub,
   faChrome,
 } from "@fortawesome/free-brands-svg-icons";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface Props {
   handleIsLoggedIn: () => void;
@@ -23,6 +26,7 @@ interface Props {
 const NonLoggedInHomePage = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const ref = useRef();
 
   const mount = useRef(null);
 
@@ -168,13 +172,29 @@ const NonLoggedInHomePage = () => {
     }
   };
 
+  useGSAP(() => {
+    const el = ref.current;
+    var tl = gsap.timeline();
+    tl.from(".gsap", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: 'gsap',
+        scroller: "el",
+        scrub: 3
+      }
+    });
+  });
+
   return (
     <>
-      <div className="main m-0 p-0 relative">
+      <div ref={ref} className="main m-0 p-0 relative">
         <div ref={mount} className="absolute top-0 left-0 z-[-1]"></div>
         <div className="p-6 w-[60%] m-auto text-zinc-400">
           <ul className="flex justify-around">
-            <li className={pathname == "/" ? "text-zinc-100" : "text-zinc-400"}>
+            <li className={pathname == "/" ? "text-zinc-100 gsap" : "text-zinc-400 gsap"}>
               {" "}
               {/* <Link href={"/"}>Home</Link>{" "} */}
               <a href="#" onClick={scrollToHome}>
@@ -182,9 +202,9 @@ const NonLoggedInHomePage = () => {
               </a>
             </li>
             <li
-            // className={
-            //   pathname == "/features" ? "text-zinc-100" : "text-zinc-400"
-            // }
+            className={
+              pathname == "/features" ? "text-zinc-100 gsap" : "text-zinc-400 gsap"
+            }
             >
               {" "}
               {/* <Link href={"/features"}>Features</Link>{" "} */}
@@ -193,9 +213,7 @@ const NonLoggedInHomePage = () => {
               </a>
             </li>
             <li
-            // className={
-            //   pathname == "/contact" ? "text-zinc-100" : "text-zinc-400"
-            // }
+            className="text-zinc-400 gsap"
             >
               {" "}
               {/* <Link href={"/contact"}>Contact Us</Link>{" "} */}
@@ -204,9 +222,7 @@ const NonLoggedInHomePage = () => {
               </a>
             </li>
             <li
-            // className={
-            //   pathname == "about" ? "text-zinc-100" : "text-zinc-400"
-            // }
+            className="text-zinc-400 gsap"
             >
               <a href="#" onClick={scrollToAboutUs}>
                 About Us
@@ -218,13 +234,13 @@ const NonLoggedInHomePage = () => {
         </div>
         <div
           id="home-section"
-          className="title mt-28 text-center text-[6rem] tracking-[1rem] text-white"
+          className="title gsap mt-28 text-center text-[6rem] tracking-[1rem] text-white"
         >
           SAAQI
-          <h1 className="mt-0 text-[1.1rem] tracking-widest text-zinc-400">
+          <h1 className="mt-0 text-[1.1rem] gsap tracking-widest text-zinc-400">
             Make your confession
           </h1>
-          <h1 className="mt-32 text-[1rem] tracking-widest text-zinc-100">
+          <h1 className="mt-32 gsap text-[1rem] tracking-widest text-zinc-100">
             It's secure and adorable
           </h1>
         </div>
@@ -232,7 +248,7 @@ const NonLoggedInHomePage = () => {
       <div className="a mt-[50vh] h-[500vh] bg-black">
         <div className="a mt-[50vh] w-screen h-[500vh] bg-black">
           <div className="h11 flex gap-1 justify-center">
-            <div className="box1  h-20">
+            <div className="box1 gsap h-20">
               <button
                 id="toggleButton"
                 className="inline-flex   items-center px-12 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
@@ -257,7 +273,7 @@ const NonLoggedInHomePage = () => {
               <h6 className="text-gray-50 text-sm ml-10 mt-3">total users</h6>
             </div>
 
-            <div className="box2 w-64  h-20">
+            <div className="box2 gsap w-64 ml-8 h-20">
               <button
                 id="toggleButton"
                 className="inline-flex items-center px-20 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
@@ -282,7 +298,7 @@ const NonLoggedInHomePage = () => {
               <h6 className="text-gray-50 mt-3 text-sm ml-20">total online</h6>
             </div>
 
-            <div className="box3">
+            <div className="box3 gsap">
               <button
                 id="toggleButton"
                 className="inline-flex items-center px-8 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
@@ -313,14 +329,14 @@ const NonLoggedInHomePage = () => {
           </div>
 
           <div className=" w-96 mx-auto ">
-            <div className="circle text-center bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full w-20 h-20 mt-24 m-auto"></div>
-            <h1 className="text-gray-50 text-6xl  mt-28 m-auto  ">
+            <div className="circle gsap text-center bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full w-20 h-20 mt-24 m-auto"></div>
+            <h1 className="text-gray-50 gsap text-6xl  mt-28 m-auto  ">
               INSPIRATION
             </h1>
           </div>
 
           <div className="BadaBoxes flex m-20 justify-evenly">
-            <div className="box1  ">
+            <div className="box1 gsap ">
               <div className="box text-gray-50 tracking-wider rounded-lg w-[20vw] h-[20vw] bg-gradient-to-r from-slate-500 to-slate-800">
                 <div className=" rounded-md flex flex-col text-center mx-auto  justify-evenly item-center text-gray-50 bg-[#111827]  tracking-wider w-[20vw] h-[20vw]">
                   <div className="button1  ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-orange-400 to-rose-400 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]  cursor-pointer">
@@ -343,7 +359,7 @@ const NonLoggedInHomePage = () => {
               </h2>
             </div>
 
-            <div className="box2  ">
+            <div className="box2 gsap ">
               <div className="box rounded-lg flex flex-col text-center mx-auto  justify-evenly item-center text-gray-50 bg-[#111827]  tracking-wider w-[20vw] h-[20vw] ">
                 <div className="button1 ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium rounded-lg text-white bg-gradient-to-r from-gray-700 to-black">
                   Select Your Tier
@@ -379,7 +395,7 @@ const NonLoggedInHomePage = () => {
               </h2>
             </div>
 
-            <div className="box3">
+            <div className="box3 gsap">
               <div className="box  shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)] rounded-lg text-gray-50 tracking-wider w-[20vw] h-[20vw] bg-gradient-to-r from-slate-900 to-slate-700">
                 <div className="flex pt-2 flex-col gap-3">
                   <button className="shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
@@ -411,15 +427,15 @@ const NonLoggedInHomePage = () => {
           </div>
           {/* JAKARTA TYPOGRAPHY */}
           <div className="description pt-10 bg-black text-white justify-center text-center grid gap-20 ">
-            <h1 className="text-4xl">EXCELLENCY</h1>
+            <h1 className="text-4xl gsap">EXCELLENCY</h1>
             <h1
               id="about-us-section"
-              className="text-6xl brightness-200  contrast-200 bg-gradient-to-t from-pink-500 via-violet-600 to-rose-600 bg-clip-text text-transparent "
+              className="text-6xl gsap brightness-200  contrast-200 bg-gradient-to-t from-pink-500 via-violet-600 to-rose-600 bg-clip-text text-transparent "
             >
               SAAQI
             </h1>
-            <p className="font-[sathosi] font-2xl">
-              <b className="font-[Time-new-Roman]  text-xl">
+            <p className="font-[sathosi] gsap font-2xl">
+              <b className="font-[Time-new-Roman] gsap text-xl">
                 Introducing Saaqi{" "}
               </b>{" "}
               <br /> A vibrant social media platform designed to <br /> connect
@@ -430,28 +446,28 @@ const NonLoggedInHomePage = () => {
               live streaming, Saaqi empowers users to express themselves
               authentically. <br /> <br />
               <br />{" "}
-              <p className="text-2xl">
+              <p className="text-2xl gsap">
                 Join Saaqi today and embark on a journey of creativity,
                 connection, and community.
               </p>
             </p>
-            <h3 className="text-3xl bg-gradient-to-t from-teal-300 via-rose-500 to-violet-800 bg-clip-text text-transparent">
+            <h3 className="text-3xl bg-gradient-to-t gsap from-teal-300 via-rose-500 to-violet-800 bg-clip-text text-transparent">
               ADVANCE
             </h3>
             <div className="btns flex justify-center text-center gap-20">
-              <button className="color bg-gradient-to-r from-teal-400 to-yellow-100 rounded-full py-4 px-20 text-center bg-center ">
+              <button className="color gsap bg-gradient-to-r from-teal-400 to-yellow-100 rounded-full py-4 px-20 text-center bg-center ">
                 Documentation
               </button>
               <button
                 onClick={redirectToRegister}
-                className="color bg-gradient-to-r from-purple-500 to-teal-500 rounded-full py-4 px-20 text-center bg-center"
+                className="color bg-gradient-to-r gsap from-purple-500 to-teal-500 rounded-full py-4 px-20 text-center bg-center"
               >
                 Register
               </button>
               <button
                 onClick={redirectToPrivacy}
                 style={{ cursor: "pointer" }}
-                className="color bg-gradient-to-r from-yellow-400 to-rose-600 rounded-full py-4 px-20 text-center bg-center "
+                className="color bg-gradient-to-r gsap from-yellow-400 to-rose-600 rounded-full py-4 px-20 text-center bg-center "
               >
                 Privacy Policy
               </button>
@@ -463,32 +479,28 @@ const NonLoggedInHomePage = () => {
             <div className="left-vala ml-20 flex flex-col gap-20">
               <h1
                 id="feature-section"
-                className="text-6xl capitalize leading-32 mt-20 leading-20"
+                className="text-6xl capitalize gsap leading-32 mt-20 leading-20"
               >
                 {" "}
                 🌟 Radiate positivity, <br />
                 🌍 Inspire wanderlust, <br />
                 🤝 Connect.
               </h1>
-              <p className="leading-loose">
+              <p className="leading-loose gsap">
                 Its sleek interface encourages <br /> seamless navigation and
                 discovery, <br />
                 while robust privacy controls ensure users feel secure in their
                 online presence. <br /> Saaqi fosters community through likes,
                 comments, and direct messaging, <br /> facilitating meaningful
                 connections and conversations. <br /> Additionally, Saaqi's
-                Explore page curates personalized <br /> content tailored to
-                users' interests, fostering discovery and inspiration. <br />{" "}
-                Whether it's connecting with friends, discovering new passions,
-                or showcasing talents, <br /> Saaqi is the ultimate destination
-                for social networking and self-expression in the digital age.
+                Explore page curates personalized
               </p>
-              <button className="button3 mt-4 w-96 rounded-md h-14 items-center px-10 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-purple-600 hover:bg-gradient-to-r from-fuchsia-500">
+              <button className="button3 gsap w-96 rounded-md h-14 items-center px-10 py-4 border border-transparent text-base  font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-purple-600 hover:bg-gradient-to-r from-fuchsia-500">
                 Know More
               </button>
             </div>
 
-            <div className="w-96 h-96 mt-20">
+            <div className="w-96 h-96 gsap mt-20">
               <img
                 src="https://images.unsplash.com/photo-1495001258031-d1b407bc1776?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJpZW5kcyUyMHdpdGglMjBzb2NpYWwlMjBtZWRpYXxlbnwwfHwwfHx8MA%3D%3D"
                 alt=""
@@ -497,7 +509,7 @@ const NonLoggedInHomePage = () => {
           </div>
 
           {/* tricky and wizardry second*/}
-          <div className="flex  mt-32 justify-around bg-black text-white">
+          <div className="flex mt-32 justify-around bg-black text-white">
             <div className="w-96 h-32 mt-20">
               <img
                 src="https://images.unsplash.com/photo-1522098543979-ffc7f79a56c4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGZyaWVuZHN8ZW58MHx8MHx8fDA%3D"
@@ -506,10 +518,10 @@ const NonLoggedInHomePage = () => {
             </div>
 
             <div className="left-vala ml-20 flex flex-col gap-20">
-              <h1 className="text-6xl mt-20 leading-20">
+              <h1 className="text-6xl gsap mt-20 leading-20">
                 Explore, Dream, Discover 🌍
               </h1>
-              <p>
+              <p className="gsap">
                 Embracing the magic of everyday moments! 🌟
                 <br /> Life's beauty lies in the simplest of things - a morning
                 sunrise, <br /> a cup of coffee shared with loved ones, <br />{" "}
@@ -526,7 +538,7 @@ const NonLoggedInHomePage = () => {
                 loving endlessly! <br />
                 💖✨ #EmbraceTheMagic #CherishTheJourney #LiveLaughLove !
               </p>
-              <button className="button3 mt-4 w-96 rounded-md h-14 items-center px-10 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-purple-600 hover:bg-gradient-to-r from-fuchsia-500">
+              <button className="button3 gsap mt-4 w-96 rounded-md h-14 items-center px-10 py-4 border border-transparent text-base leading-6 font-medium text-center  text-white bg-gradient-to-r from-rose-700 to-purple-600 hover:bg-gradient-to-r from-fuchsia-500">
                 EXPLORE
               </button>
             </div>
@@ -534,15 +546,15 @@ const NonLoggedInHomePage = () => {
 
           {/* footer */}
           <footer
-            id="contact-us-section"
+            id="contact-us-section gsap"
             className="bg-black  text-white justify-center text-center py-32"
           >
             <div className="footer-row flex text-wrap justify-between gap-10 p-10">
               <div className="footer-col">
-                <h1 className="text-white size-3 ml-24 font-semibold font-sans">
+                <h1 className="text-white size-3 ml-28 font-semibold font-sans">
                   Info
                 </h1>
-                <ul className="links mt-20 ml-20 list-none">
+                <ul className="links mt-10 ml-[5.5rem] list-none">
                   <li>
                     <a
                       className="no-underline text-slate-400 hover:text-white text-sm"
@@ -594,10 +606,10 @@ const NonLoggedInHomePage = () => {
                 </ul>
               </div>
               <div className="footer-col">
-                <h1 className="text-white size-3 font-semibold font-sans">
+                <h1 className="text-white size-3 ml-5 font-semibold font-sans">
                   Explore
                 </h1>
-                <ul className="links mt-20 list-none">
+                <ul className="links mt-10 list-none">
                   <li>
                     <a
                       className="no-underline text-slate-400 hover:text-white text-sm "
@@ -649,10 +661,10 @@ const NonLoggedInHomePage = () => {
                 </ul>
               </div>
               <div className="footer-col">
-                <h1 className="text-white size-3 font-semibold font-sans">
+                <h1 className="text-white size-3 ml-10 font-semibold font-sans">
                   Legal
                 </h1>
-                <ul className="links mt-20 list-none">
+                <ul className="links mt-10 list-none">
                   <li>
                     <a
                       className="no-underline text-slate-400 hover:text-white text-sm "
@@ -704,10 +716,10 @@ const NonLoggedInHomePage = () => {
                 </ul>
               </div>
               <div className="footer-col">
-                <h1 className="text-white size-3 font-semibold font-sans">
+                <h1 className="text-white size-3 ml-32 font-semibold font-sans">
                   Newletter
                 </h1>
-                <p className="mt-20 mr-20 text-sm text-slate-200">
+                <p className="mt-10 mr-20 text-sm text-slate-200">
                   Saqi brings the latest, sip by sip, Stay refreshed with <br />{" "}
                   our news, don't skip. Updates, trends, and <br /> stories
                   untold, <br />

@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ user: userData });
   } catch (error) {
-    console.error('Error fetching user data:', error);
+    console.error('Error fetching local user data:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

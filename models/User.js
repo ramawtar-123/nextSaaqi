@@ -6,7 +6,7 @@ mongoose.connect('mongodb://localhost:27017/saaqi_db', { useNewUrlParser: true, 
 const UserSchema = new mongoose.Schema({
     fullname:  {
         type: String,
-        required: true
+        required: false
     },
     username: {
         type: String,

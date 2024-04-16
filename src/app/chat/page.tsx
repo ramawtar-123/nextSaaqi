@@ -14,7 +14,8 @@ import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
-
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react';
 
 const socket = io()
 
@@ -279,18 +280,33 @@ if(!isLoggedIn){
     console.log(messageWithUser)
   };
 
+  useGSAP(() => {
+    var tl = gsap.timeline();
+    tl.from(".gsap", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: 'gsap',
+        scroller: "el",
+        scrub: 3
+      }
+    });
+  });
+
 
   return (
     <>
     <Navbar />
         <div className="main chat-bg min-h-[100vh] max-h-[100vh] overflow-y-hidden flex w-[100vw]">
             <div className="left w-[30%] ml-[10rem] mt-12 flex-col overflow-y-scroll no-scrollbar ">
-                <h1 className='text-[1.5rem] font-semibold'>Chats</h1>
+                <h1 className='text-[1.5rem] font-semibold gsap'>Chats</h1>
                 
                 <Collapsible>
                   <CollapsibleTrigger>
-                  <div className="flex w-[22rem] justify-between mb-4 items-center mt-8">
-                    <h1 className='text-zinc-400'>New messages</h1>
+                  <div className="flex w-[22rem] justify-between gsap mb-4 items-center mt-8">
+                    <h1 className='text-zinc-400 gsap'>New messages</h1>
                     <Button variant="ghost" size="sm" className="w-9 p-0">
                       <ChevronDown className="h-4 w-4 " />
                       <span className="sr-only">Toggle</span>
@@ -306,7 +322,7 @@ if(!isLoggedIn){
                       newMessages.map((elem, index) => (
                         <Link href={`/chat/${elem.name}`} key={index} className={`${
                             isActive(`/chat/${elem.name}`) ? "bg-[#268bf0]" : "chat-compo-bg"
-                          } message hover:drop-shadow-[0_35px_35px_rgba(38,139,240,0.45)] hover:bg-[#268bf0] w-[22rem] mb-4 h-[4.7rem] rounded-xl flex items-center`}
+                          } message gsap hover:drop-shadow-[0_35px_35px_rgba(38,139,240,0.45)] hover:bg-[#268bf0] w-[22rem] mb-4 h-[4.7rem] rounded-xl flex items-center`}
                         >
                           <span className='relative border-4 border-blue-500 ml-4 rounded-full'>
                             <img src={`${elem.profile}`} className="dp rounded-full w-[3.3rem] h-[3.3rem] object-cover" alt={`${elem.name}'s profile`} />
@@ -328,7 +344,7 @@ if(!isLoggedIn){
 
                 <Collapsible>
                   <CollapsibleTrigger>
-                  <div className="flex w-[22rem] justify-between mb-6 items-center mt-1">
+                  <div className="flex w-[22rem] justify-between gsap mb-6 items-center mt-1">
                     <h1 className='text-zinc-400'>Last messages</h1>
                     <Button variant="ghost" size="sm" className="w-9 p-0">
                       <ChevronDown className="h-4 w-4 " />
@@ -339,11 +355,11 @@ if(!isLoggedIn){
                   <CollapsibleContent>
                     {
                       OldMessages.map((elem, index) => (
-                        <div key={index} className="message hover:drop-shadow-[0_35px_35px_rgba(38,139,240,0.45)] hover:bg-[#268bf0] w-[22rem] mb-4 h-[4.7rem] rounded-xl chat-compo-bg flex items-center">
+                        <div key={index} className="message gsap hover:drop-shadow-[0_35px_35px_rgba(38,139,240,0.45)] hover:bg-[#268bf0] w-[22rem] mb-4 h-[4.7rem] rounded-xl chat-compo-bg flex items-center">
                           <img src={`${elem.profile}`} key={index} className="dp rounded-full w-[3.5rem] h-[3.5rem] ml-4 object-cover"></img>
                           <div key={index} className="dets flex-col ml-4">
-                            <h1 className='font-semibold'>{elem.name}</h1>
-                            <h2 className='font-light text-zinc-300 text-xs'>{elem.message}</h2>
+                            <h1 className='font-semibold gsap'>{elem.name}</h1>
+                            <h2 className='font-light text-zinc-300 text-xs gsap'>{elem.message}</h2>
                           </div>
                       </div>
                       ))
@@ -355,7 +371,7 @@ if(!isLoggedIn){
             </div>
 
             <div className="right flex-col relative w-[70%] ">
-                    <div className='w-[90%] h-[4rem] flex items-center justify-between rounded-xl m-auto mt-6  '>
+                    <div className='w-[90%] h-[4rem] flex gsap items-center justify-between rounded-xl m-auto mt-6  '>
                       <div className='flex items-center'>
                         <img src={`${Users[0].profile}`} className="dp rounded-full w-[3rem] h-[3rem] ml-4"></img>
                         <div className="dets flex-col ml-4">
@@ -377,7 +393,7 @@ if(!isLoggedIn){
                           <div className={`flex ${ele.USER.displayName == USER.displayName ? "justify-end" : "justify-start" } mt-7 h-5 z-10`} key={index}>
                             <a href="" key={index} className={`relative h-10 text-sm self-center content-center px-5 rounded-2xl ${ele.USER.displayName == USER.displayName  ? "bg-[#268bf0] rounded-br-none" : "bg-[#424656] rounded-bl-none" } `}>
                               {ele.message}
-                              <div className={`text-[0.7rem] bottom-[-1rem] absolute text-zinc-400 ${ele.USER.displayName == USER.displayName ? "right-0" : "left-0"}`}>
+                              <div className={`text-[0.7rem] gsap bottom-[-1rem] absolute text-zinc-400 ${ele.USER.displayName == USER.displayName ? "right-0" : "left-0"}`}>
                                 {ele.USER.displayName == USER.displayName ? "You" : ele.USER.displayName}
                               </div>
                             </a>

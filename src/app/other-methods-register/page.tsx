@@ -13,6 +13,8 @@ import { FacebookAuthProvider } from "firebase/auth";
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, toggleDarkMode, setUSER } from '../../store/actions';
 import { Fullscreen } from 'lucide-react';
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react';
 
 
 const firebaseConfig = {
@@ -38,6 +40,21 @@ const facebookProvider = new FacebookAuthProvider();
 
 
 const page = () => {
+
+  useGSAP(() => {
+    var tl = gsap.timeline();
+    tl.from(".gsap", {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: 'gsap',
+        scroller: "el",
+        scrub: 3
+      }
+    });
+  });
 
   const USER = useSelector(state => state.rootReducer.user);
   const router = useRouter()
@@ -96,24 +113,24 @@ const page = () => {
         <div className="flex items-center blackShade justify-center h-[100vh] ">
           <div className='back h-full w-[100%] '>
             <div className='h-10 w-[50%] flex  justify-between text-white '>
-              <div className='logo h-10 w-10 bg-purple-500 rounded-full ml-32 mt-9 '><h1 className='ml-14 text-2xl font-bold hover:text-purple-500'>SAAQI</h1></div>
+              <div className='logo h-10 w-10 gsap rounded-full ml-32 mt-9 '><h1 className='ml-14 text-2xl font-bold hover:text-purple-500'>SAAQI</h1></div>
               <div className='flex gap-20 mr-8 mt-10 '>
-                <a href='' className='text-slate-400 hover:text-purple-700 '>Home</a>
-                <a href='' className='text-slate-400 hover:text-purple-700'>Join</a>
+                <a href='' className='text-slate-400 gsap hover:text-purple-700 '>Home</a>
+                <a href='' className='text-slate-400 gsap hover:text-purple-700'>Join</a>
               </div>
             </div>
             <div className="box flex flex-col transition-all items-center h-[80vh] w-[28vw] rounded-xl  text-white mt-24 ml-56">
               <div className="dets mt-[9%] transition-all  w-[90%] h-[70%] flex flex-col justify-center ">
-              <h1 className='text-4xl font-semibold mb-10'>Register</h1>
-                <button onClick={ USER && Object.keys(USER).length > 0 ? redirectToMain : signupWithGoogle} className='w-[18rem] h-[3rem] mb-3 rounded-full text-black bg-zinc-100'>
+              <h1 className='text-4xl font-semibold mb-10 gsap'>Register</h1>
+                <button onClick={ USER && Object.keys(USER).length > 0 ? redirectToMain : signupWithGoogle} className='w-[18rem] gsap h-[3rem] mb-3 rounded-full text-black bg-zinc-100'>
                   Signup With Google
                 </button>
 
-                <button onClick={USER ? redirectToMain : signupWithFacebook} className='w-[18rem] h-[3rem] rounded-full text-black bg-zinc-100'>
+                <button onClick={USER ? redirectToMain : signupWithFacebook} className='w-[18rem] h-[3rem] rounded-full gsap text-black bg-zinc-100'>
                   Signup With Facebook
                 </button>
               </div>
-              <div className="login-with flex w-[80%] h-[15%] justify-center items-center gap-4 mt-4">
+              <div className="login-with flex gsap w-[80%] h-[15%] justify-center items-center gap-4 mt-4">
 
             </div>
           </div>
