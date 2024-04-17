@@ -1,6 +1,6 @@
 import mongoose, { mongo } from 'mongoose'
 
-mongoose.connect('mongodb://localhost:27017/saaqi_db', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://DEV:devanand@saaqi.hk5f3oi.mongodb.net/?retryWrites=true&w=majority&appName=Saaqi', { useNewUrlParser: true, useUnifiedTopology: true })
 
 const storySchema = mongoose.Schema({
     user: {
