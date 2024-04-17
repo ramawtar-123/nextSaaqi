@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const newUser = new User({
+    const newUser = await User.create({
       fullname,
       email,
     });

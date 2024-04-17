@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 import { FacebookAuthProvider } from "firebase/auth";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout, toggleDarkMode, setUSER } from '../../store/actions';
+import { login, logout, toggleDarkMode, setUSER, setTEMPUSER } from '../../store/actions';
 import { Fullscreen } from 'lucide-react';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
@@ -69,14 +69,11 @@ const page = () => {
           fullname: user.displayName,
           email: user.email,
         }))  
-        dispatch(login())
+        router.push("/account/edit-info")
         return false;
       }
     })
   }, [])
-
-  // console.log(user)
-  console.log(USER)
 
   
   const redirectToMain = () => {
@@ -93,7 +90,6 @@ const page = () => {
         fullname: user.displayName,
         email: user.email,
       }));
-      dispatch(login());
     })
     .catch((error) => {
       console.error("Error signing in with Google: ", error);

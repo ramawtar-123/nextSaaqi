@@ -6,7 +6,9 @@ import bcrypt from 'bcryptjs';
 export default async function handler(req, res) {
   await dbConnect();
 
-  const { fullname, username, email, password, confirmpassword } = req.body;
+  const { fullname, username, email, password } = req.body;
+
+  console.log("ENTRIES: ", fullname, username, email, password)
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);

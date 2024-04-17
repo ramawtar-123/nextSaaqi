@@ -4,6 +4,7 @@ import React, { useState} from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react'
+import { useSelector } from 'react-redux';
 
 
 interface PostProps {
@@ -13,8 +14,19 @@ interface PostProps {
 const Post: React.FC<PostProps> = ({ isDarkMode }) => {
   const [postContent, setPostContent] = useState<string>('');
 
+  const USERINFO = useSelector(state => state.rootReducer.fullUserInfo)
+
+  const [userEmail, setUserEmail] = useState();
+
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setUserEmail(USERINFO.email)
+
+    console.log("EMAIL:::",userEmail)
+
 
     try {
       const response = await fetch('/api/post', {
@@ -22,8 +34,11 @@ const Post: React.FC<PostProps> = ({ isDarkMode }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: postContent }),
+        body: JSON.stringify({ content: postContent, email: userEmail }),
       });
+
+      console.log("USERINFO::: ", USERINFO)
+      
 
       if (response.ok) {
         console.log('Post submitted successfully');

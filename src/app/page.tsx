@@ -6,7 +6,7 @@ import NonLoggedInHomePage from '../components/NonLoggedInHomePage';
 import { useEffect, useMemo } from "react";
 import * as React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { login, logout, setUSER, setUSERFULLINFO } from '../store/actions/index';
+import { login, logout, setTEMPUSER, setUSER, setUSERFULLINFO } from '../store/actions/index';
 import {Suspense} from 'react'
 
 
@@ -55,6 +55,8 @@ const Home = () => {
 
     const router = useRouter();
 
+    const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
+
     useEffect(() => {
       onAuthStateChanged(firebaseAuth, async (user) => {
         if(user){
@@ -63,6 +65,7 @@ const Home = () => {
             fullname: user.displayName,
             email: user.email,
           }))  
+          dispatch(setUSERFULLINFO(user))
           
           const userinfo = await axios.get(`/api/findUserByEmail?email=${user.email}`)
           
@@ -113,6 +116,13 @@ const Home = () => {
             dispatch(setUSER({
               fullname: data.user.fullname,
               email: data.user.email,
+            })) 
+            dispatch(setUSERFULLINFO({
+              fullname: data.user.fullname,
+              email: data.user.email,
+              username: data.user.username,
+              bio: data.user.bio,
+              profilePicture: data.user.profilePicture
             })) 
             console.log(data.user)
           }

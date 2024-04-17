@@ -10,43 +10,83 @@ import Post from '../../../../models/Post';
 import { MongoClient } from 'mongodb';
 
 
-const client = new MongoClient("mongodb://localhost:27017/");
+const client = new MongoClient("mongodb+srv://DEV:devanand@saaqi.hk5f3oi.mongodb.net/?retryWrites=true&w=majority&appName=Saaqi");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
+  const { content, email } = req.body;
 
-    const decodedToken = jwt.verify(token, secretkey);
-    const userId = decodedToken.id; 
+      if (req.method === 'POST') {
+        const token = req.cookies.token;
 
-    const { content } = req.body;
+          if(token){
+            const decodedToken = jwt.verify(token, secretkey);
+            const userId = decodedToken.id; 
 
-    try {
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+            try {
+              const user = await User.findById(userId);
+              if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+              }
+        
+              const post = await Post.create({
+                content,
+                user: userId,
+              });
+          
+              const populatedPost = await Post.findById(post._id).populate('user');
+        
+              if(user){
+                user.posts.push(post._id);
+                await user.save();
+              }
+        
+              res.status(201).json({ message: 'Post created successfully', post: populatedPost });
+            } catch (error) {
+              console.error('Error creating post:', error);
+              res.status(500).json({ message: 'Internal Server Error' });
+            }
+          } 
+        
+
+
+
+          if(email){
+            console.log("EMAIL: ", email)
+
+
+            try {
+              const userEmail = await User.findOne({email});
+              console.log(userEmail)
+              if (!userEmail) {
+                return res.status(404).json({ message: 'User not found' });
+              }
+        
+              const post = await Post.create({
+                content,
+                user: userEmail._id,
+              });
+          
+              const populatedPost = await Post.findById(post._id).populate('user');
+
+              if(email){
+                userEmail.posts.push(post._id);
+                await userEmail.save();
+              }
+        
+              res.status(201).json({ message: 'Post created successfully', post: populatedPost });
+            } catch (error) {
+              console.error('Error creating post:', error);
+              res.status(500).json({ message: 'Internal Server Error' });
+            }
+          }
+           else {
+            res.status(405).json({ message: 'Method Not Allowed' });
+          }
       }
+      
+    
 
-      const post = await Post.create({
-        content,
-        user: userId,
-      });
+      return res.status(401).json({ message: 'Unauthorized' });
 
-  
-      const populatedPost = await Post.findById(post._id).populate('user');
-
-      user.posts.push(post._id);
-      await user.save();
-
-      res.status(201).json({ message: 'Post created successfully', post: populatedPost });
-    } catch (error) {
-      console.error('Error creating post:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
-    }
-  } else {
-    res.status(405).json({ message: 'Method Not Allowed' });
   }
-}
+   

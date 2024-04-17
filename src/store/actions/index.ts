@@ -4,6 +4,8 @@ export const LOGOUT = 'LOGOUT';
 export const TOGGLE_DARK_MODE = 'TOGGLE_DARK_MODE';
 export const SET_USER = 'SET_USER'
 export const SET_USERFULLINFO = 'SET_USERFULLINFO'
+export const SET_TEMPUSER = 'SET_TEMPUSER'
+
 
 
 export const login = () => ({
@@ -34,5 +36,13 @@ export const setUSERFULLINFO = (user) => ({
     username: user.username,
     bio: user.bio,
     profilePicture: user.profilePicture
+  }
+})
+
+export const setTEMPUSER = (user) => ({
+  type: SET_TEMPUSER,
+  payload: {
+    fullname: user.displayName,
+    email: user.email,
   }
 })

@@ -10,13 +10,14 @@ import Stories from "./sub_components/Stories";
 import Search from "./sub_components/Search";
 import UserAccount from "./sub_components/UserComponent";
 import Navbar from "./sub_components/Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
+import { setTEMPUSER } from "@/store/actions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -42,8 +43,13 @@ const githubProvider = new GithubAuthProvider();
 
 function Homepage() {
 
+  const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
+  
+
   const isDarkMode = useSelector(state => state.rootReducer.isDarkMode);
   const backColor = isDarkMode ? "dark-mode-bg" : "light-mode-bg"
+
+  const dispatch = useDispatch();
 
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -55,6 +61,8 @@ function Homepage() {
       if(user){
         setUser(user);
         setGoogleLogged(true)
+        dispatch(setTEMPUSER(user));
+        console.log("TEMP USER: ", TEMPUSER)
       }
       else{
         setUser("");

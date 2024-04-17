@@ -69,28 +69,7 @@ const page = () => {
           fullname: user.displayName,
           email: user.email,
         }))  
-
-        fetch("/api/addGoogleUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullname: user.displayName,
-            email: user.email,
-          }),
-        })
-        .then(response => {
-          if (response.ok) {
-            console.log("User created successfully", response.user);
-            dispatch(login())
-          } else {
-            console.error("Error creating user");
-          }
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        });
+        dispatch(login());
 
       }
     })

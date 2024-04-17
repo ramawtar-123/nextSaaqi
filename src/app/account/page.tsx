@@ -9,6 +9,8 @@ import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
 import Navbar from '@/components/sub_components/Navbar';
+import { setTEMPUSER } from '@/store/actions';
+import { useDispatch } from 'react-redux';
 
 
 const firebaseConfig = {
@@ -59,10 +61,13 @@ function Account() {
   let [googleLogged, setGoogleLogged] = useState<boolean>(false);
   const [user, setUser] = useState({});
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (user) => {
       if(user){
         setUser(user);
+        dispatch(setTEMPUSER(user))
         setGoogleLogged(true)
       }
       else{
