@@ -65,7 +65,6 @@ const Home = () => {
             fullname: user.displayName,
             email: user.email,
           }))  
-          dispatch(setUSERFULLINFO(user))
           
           const userinfo = await axios.get(`/api/findUserByEmail?email=${user.email}`)
           

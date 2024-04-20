@@ -1,5 +1,6 @@
-import User from "../../../../models/User";
-import dbConnect from "../../../../utils/dbConnect";
+import User from "../../../../../models/User";
+import mongoose from "mongoose";
+import dbConnect from "../../../../../utils/dbConnect";
 
 
 export default async function handler(req, res) {
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
         }
 
         // Check if the followingId is already in the followings array
-        if (user.followings.some(following => following.user === followingId)) {
+        if (user.followings.some(following => following.user.toString() === followingId)) {
           return res.status(400).json({ success: false, message: 'User is already in the followings list' });
         }
 
@@ -48,8 +49,7 @@ export default async function handler(req, res) {
           }
   
           // Check if the followingId exists in the followings array
-          const followingIndex = user.followings.findIndex(following => JSON.stringify(following.user) === JSON.stringify(followingId));
-          console.log(followingId)
+          const followingIndex = user.followings.findIndex(following => following.user.toString() === followingId);
           if (followingIndex === -1) {
             return res.status(404).json({ success: false, message: 'User is not in the followings list' });
           }

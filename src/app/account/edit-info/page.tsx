@@ -10,6 +10,7 @@ import gsap from 'gsap'
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
 import { setTEMPUSER, setUSERFULLINFO } from '@/store/actions';
+import axios from 'axios';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -40,13 +41,22 @@ function UserDetails() {
 
   const TEMPUSER = useSelector(state => state.rootReducer.tempUser)
   const dispatch = useDispatch()
+  const FULLUSERINFO = useSelector(state => state.rootReducer.fullUserInfo)
 
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user) => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
       if(user){
         dispatch(setTEMPUSER(user))
-        
+        const userinfo = await axios.get(`/api/findUserByEmail?email=${user.email}`)
+          
+          dispatch(setUSERFULLINFO({
+            fullname: userinfo.data.user.fullname,
+            email: userinfo.data.user.email,
+            username: userinfo.data.user.username,
+            bio: userinfo.data.user.bio,
+            profilePicture: userinfo.data.user.profilePicture
+          })) 
       }
       else{
         
@@ -56,13 +66,18 @@ function UserDetails() {
 
 
 
+  const USER = useSelector(state => state.rootReducer.fullUserInfo)
 
   const handleFileChange = async (event) => {
+    console.log("IMAGEUSER: ",FULLUSERINFO)
+    const userString = JSON.stringify(FULLUSERINFO);
+
     const file = event.target.files[0];
     setFile(event.target.files[0])
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('user', userString);
 
       try {
         const response = await fetch('/api/uploadimage', {
@@ -70,10 +85,10 @@ function UserDetails() {
           body: formData,
         });
         const data = await response.json();
-        console.log(data); // Handle response from the server
+        console.log(data); 
       } catch (error) {
         console.error('Error uploading file:', error);
-        // Handle error
+     
       }
     }
 

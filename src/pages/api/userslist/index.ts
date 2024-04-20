@@ -9,11 +9,11 @@ export default async function handler(req, res) {
 
   try {
 
-    const { currentUserEmail } = req.query;
-    console.log(currentUserEmail)
+    // const { currentUserEmail } = req.query;
+    // console.log(currentUserEmail)
 
-    const user = await axios.get(`/api/findUserByEmail?email=${currentUserEmail}`)
-    console.log('USER: ',user)
+    // const user = await axios.get(`/api/findUserByEmail?email=${currentUserEmail}`)
+    // console.log('USER: ',user)
 
     const users = await User.find().limit(3);
 
