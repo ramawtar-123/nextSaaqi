@@ -43,11 +43,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               res.status(201).json({ message: 'Post created successfully', post: populatedPost });
             } catch (error) {
               console.error('Error creating post:', error);
-              res.status(500).json({ message: 'Internal Server Error' });
+              res.status(501).json({ message: 'Internal Server Error token' });
             }
           } 
         
-
 
 
           if(email){

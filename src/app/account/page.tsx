@@ -11,6 +11,7 @@ import { getDatabase, ref, set } from 'firebase/database'
 import Navbar from '@/components/sub_components/Navbar';
 import { setTEMPUSER } from '@/store/actions';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 
 const firebaseConfig = {
@@ -59,19 +60,22 @@ function Account() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   let [googleLogged, setGoogleLogged] = useState<boolean>(false);
-  const [user, setUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user) => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
       if(user){
-        setUser(user);
+        const res = await axios.get(`api/findUserByEmail?email=${user.email}`)
+        setCurrentUser(res.data.user);
+        console.log(currentUser)
+
         dispatch(setTEMPUSER(user))
         setGoogleLogged(true)
       }
       else{
-        setUser("");
+        setCurrentUser("");
       }
     })
   }, [])
@@ -99,7 +103,55 @@ function Account() {
     fetchUserData();
   }, []);
 
-  console.log(user);
+  const [userFollowers, setUserFollowers] = useState(0)
+
+  useEffect(() => {
+    const countFollowers = async () => {
+      try{
+        const res = await axios.get(`/api/countfollowers?userId=${currentUser._id}`);
+        setUserFollowers(res.data.followerCount)
+      }
+      catch{
+        console.log("error")
+      }
+    }
+  
+    countFollowers()
+
+  }, [])
+
+
+  const [userFollowings, setUserFollowings] = useState(0)
+
+  useEffect(() => {
+    const countFollowings = async () => {
+      try{
+        const res = await axios.get(`/api/countfollowings?userId=${currentUser._id}`);
+        setUserFollowings(res.data.followingCount)
+      }
+      catch{
+        console.log("error")
+      }
+    }
+    countFollowings()
+  }, [])
+
+  const [userPosts, setUserPosts] = useState(0)
+
+  useEffect(() => {
+    const countPosts = async () => {
+      try{
+        const res = await axios.get(`/api/countuserposts?userId=${currentUser._id}`);
+        setUserPosts(res.data.postsCount)
+      }
+      catch{
+        console.log("error")
+      }
+    }
+    countPosts()
+  }, [])
+  
+  
 
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -135,14 +187,14 @@ function Account() {
         </div>
         <div className="information gsap w-[20rem] h-[8rem] justify-start">
           <div className='flex gap-8'>
-            <h1 className="text-2xl">{googleLogged ? user.displayName : userData.fullname}</h1>
+            <h1 className="text-2xl">{googleLogged ? currentUser.fullname : userData.fullname}</h1>
             <button>Edit Profile</button>
           </div>
 
           <div className='flex gap-7'>
-            <h1>{}</h1> <span className='ml gsap -[-7%]'>posts</span>
-            <h1>{0 }</h1> <span className='ml-[-7%] gsap'>followers</span>
-            <h1>{0 }</h1> <span className='ml-[-7%] gsap'>followings</span>
+            <h1>{userPosts}</h1> <span className='ml-[-7%] gsap'>posts</span>
+            <h1>{userFollowers }</h1> <span className='ml-[-7%] gsap'>followers</span>
+            <h1>{userFollowings }</h1> <span className='ml-[-7%] gsap'>followings</span>
           </div>
 
           <h1 className='mt-4 font-semibold gsap'>{userData.name }</h1>

@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.pngegg.com',
+        port: '',
+      },
+    ],
+  },
+
     async headers() {
       return [
         {
@@ -10,7 +20,9 @@ const nextConfig = {
               value: "unsafe-none",
             },
           ],
+          
         },
+        
       ];
     },
     reactStrictMode: false,

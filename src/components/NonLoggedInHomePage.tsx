@@ -2,7 +2,7 @@
 
 import Login from "@/app/login/page";
 import Register from "@/app/register/page";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import * as THREE from "three";
@@ -18,6 +18,7 @@ import {
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import axios from "axios";
 
 interface Props {
   handleIsLoggedIn: () => void;
@@ -188,9 +189,44 @@ const NonLoggedInHomePage = () => {
     });
   });
 
+  const [usersCount, setUsersCount] = useState(0);
+
+  useEffect(() => {
+    const countUsers = async () => {
+      try{
+        const res = await axios.get("/api/countusers");
+        setUsersCount(res.data.count)
+      }
+      catch{
+        console.log("ERROR COUNTING USERS");
+      }
+    }
+  
+    countUsers();
+
+  }, [])
+
+  const [postCount, setPostCount] = useState(0);
+
+  useEffect(() => {
+    const countPosts = async () => {
+      try{
+        const res = await axios.get("/api/countposts");
+        setPostCount(res.data.count)
+      }
+      catch{
+        console.log("ERROR COUNTING POSTS");
+      }
+    }
+  
+    countPosts();
+
+  }, [])
+
+
   return (
     <>
-      <div ref={ref} className="main m-0 p-0 relative">
+      <div className="main m-0 p-0 relative">
         <div ref={mount} className="absolute top-0 left-0 z-[-1]"></div>
         <div className="p-6 w-[60%] m-auto text-zinc-400">
           <ul className="flex justify-around">
@@ -253,7 +289,7 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex   items-center px-12 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>200+ </span>
+                <span>{usersCount}+ </span>
                 <svg
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
@@ -270,7 +306,7 @@ const NonLoggedInHomePage = () => {
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 text-sm ml-10 mt-3">total users</h6>
+              <h6 className="text-gray-50 text-sm ml-10 mt-3">Total Users</h6>
             </div>
 
             <div className="box2 gsap w-64 ml-8 h-20">
@@ -278,7 +314,7 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex items-center px-20 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>120+</span>
+                <span>{postCount}+</span>
                 <svg
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
@@ -295,7 +331,7 @@ const NonLoggedInHomePage = () => {
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 mt-3 text-sm ml-20">total online</h6>
+              <h6 className="text-gray-50 mt-3 text-sm ml-20">Total Posts</h6>
             </div>
 
             <div className="box3 gsap">
