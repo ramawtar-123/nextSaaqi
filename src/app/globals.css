@@ -27,6 +27,7 @@
 
 *{
   font-family: 'mona-sans', sans-serif;
+  
 }
 
 
@@ -138,6 +139,11 @@ background: linear-gradient(72deg, rgba(22,12,110,1) 0%, rgba(0,0,0,1) 0%, rgba(
 }
 
   
+.grid-container{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-column: 1/5;
+}
   
 
 /* --color-gradient-primary: linear-gradient(83deg, rgba(var(--color-v3-light-blue)) -5%, rgba(var(--color-v3-purple)) 51%, rgba(var(--color-v3-pink)) 125%);
