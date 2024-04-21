@@ -9,7 +9,7 @@ import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
 import Navbar from '@/components/sub_components/Navbar';
-import { setTEMPUSER } from '@/store/actions';
+import { setTEMPUSER, setUSERFULLINFO } from '@/store/actions';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import UserCard from '@/components/sub_components/FollowButton';
@@ -71,6 +71,7 @@ function Account() {
       if(user){
         const res = await axios.get(`api/findUserByEmail?email=${user.email}`)
         setCurrentUser(res.data.user);
+        dispatch(setUSERFULLINFO(res.data.user));
         setUserData(res.data.user); 
         console.log(currentUser)
 
