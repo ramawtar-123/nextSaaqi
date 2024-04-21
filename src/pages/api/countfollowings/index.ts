@@ -5,16 +5,15 @@ export default async function handler(req, res) {
   await dbConnect();
 
   try {
-    const { userId } = req.query; // Assuming userId is passed as a query parameter
+    const { userId } = req.query; 
+    console.log(userId)
 
-    // Find the user by userId
     const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    // Count the number of followers
     const followingCount = user.followings.length;
 
     res.status(200).json({ success: true, followingCount });
