@@ -2,7 +2,7 @@
 
 import Login from "@/app/login/page";
 import Register from "@/app/register/page";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import * as THREE from "three";
@@ -18,6 +18,7 @@ import {
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import axios from "axios";
 
 interface Props {
   handleIsLoggedIn: () => void;
@@ -188,9 +189,44 @@ const NonLoggedInHomePage = () => {
     });
   });
 
+  const [usersCount, setUsersCount] = useState(0);
+
+  useEffect(() => {
+    const countUsers = async () => {
+      try{
+        const res = await axios.get("/api/countusers");
+        setUsersCount(res.data.count)
+      }
+      catch{
+        console.log("ERROR COUNTING USERS");
+      }
+    }
+  
+    countUsers();
+
+  }, [])
+
+  const [postCount, setPostCount] = useState(0);
+
+  useEffect(() => {
+    const countPosts = async () => {
+      try{
+        const res = await axios.get("/api/countposts");
+        setPostCount(res.data.count)
+      }
+      catch{
+        console.log("ERROR COUNTING POSTS");
+      }
+    }
+  
+    countPosts();
+
+  }, [])
+
+
   return (
     <>
-      <div ref={ref} className="main m-0 p-0 relative">
+      <div className="main m-0 p-0 relative">
         <div ref={mount} className="absolute top-0 left-0 z-[-1]"></div>
         <div className="p-6 w-[60%] m-auto text-zinc-400">
           <ul className="flex justify-around">
@@ -253,7 +289,7 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex   items-center px-12 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>200+ </span>
+                <span>{usersCount}+ </span>
                 <svg
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
@@ -263,14 +299,14 @@ const NonLoggedInHomePage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M19 9l-7 7-7-7"
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 text-sm ml-10 mt-3">total users</h6>
+              <h6 className="text-gray-50 text-sm ml-10 mt-3">Total Users</h6>
             </div>
 
             <div className="box2 gsap w-64 ml-8 h-20">
@@ -278,7 +314,7 @@ const NonLoggedInHomePage = () => {
                 id="toggleButton"
                 className="inline-flex items-center px-20 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-[#111827] hover:bg-[#1e293b] focus:border-[#6b7280] active:bg-[#6b7280] transition ease-in-out duration-150"
               >
-                <span>120+</span>
+                <span>{postCount}+</span>
                 <svg
                   id="arrowIcon"
                   className="h-5 w-5 ml-2"
@@ -288,14 +324,14 @@ const NonLoggedInHomePage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M19 9l-7 7-7-7"
                   ></path>{" "}
                 </svg>
               </button>
-              <h6 className="text-gray-50 mt-3 text-sm ml-20">total online</h6>
+              <h6 className="text-gray-50 mt-3 text-sm ml-20">Total Posts</h6>
             </div>
 
             <div className="box3 gsap">
@@ -315,9 +351,9 @@ const NonLoggedInHomePage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M19 9l-7 7-7-7"
                   ></path>{" "}
                 </svg>
@@ -399,22 +435,22 @@ const NonLoggedInHomePage = () => {
               <div className="box  shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)] rounded-lg text-gray-50 tracking-wider w-[20vw] h-[20vw] bg-gradient-to-r from-slate-900 to-slate-700">
                 <div className="flex pt-2 flex-col gap-3">
                   <button className="shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
                       Privacy
                     </span>
                   </button>
                   <button className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
                       Confidentiality
                     </span>
                   </button>
                   <button className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
                       Protection
                     </span>
                   </button>
                   <button className="shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] relative ml-6 w-64 h-14 items-center px-14 py-4 border border-transparent text-base leading-6 font-medium  inline-flex text-white bg-black  justify-center p-0.5 mb-2 me-2 overflow-hidden   rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500  focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
+                    <span className="relative px-5 py-2.5 transition-all ease-in duration-75   rounded-md ">
                       Secrecy
                     </span>
                   </button>

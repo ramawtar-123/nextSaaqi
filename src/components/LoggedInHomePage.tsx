@@ -17,7 +17,8 @@ import { GoogleAuthProvider,GithubAuthProvider, getAuth, onAuthStateChanged, sig
 import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
-import { setTEMPUSER } from "@/store/actions";
+import { setTEMPUSER, setUSERFULLINFO } from "@/store/actions";
+import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwFJqTHIokgnBZw-F9fdihAOV0AutSJMU",
@@ -57,9 +58,11 @@ function Homepage() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user) => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
       if(user){
         setUser(user);
+        const res = await axios.get(`api/findUserByEmail?email=${user.email}`)
+        dispatch(setUSERFULLINFO(res.data.user));
         setGoogleLogged(true)
         dispatch(setTEMPUSER(user));
         console.log("TEMP USER: ", TEMPUSER)
@@ -92,7 +95,6 @@ function Homepage() {
 
     fetchUserData();
   }, []);
-
 
 
   useGSAP(() => {

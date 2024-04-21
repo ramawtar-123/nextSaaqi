@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
 
@@ -9,8 +9,11 @@ import { useFirebase } from '@/context/Firebase';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database'
 import Navbar from '@/components/sub_components/Navbar';
-import { setTEMPUSER } from '@/store/actions';
+import { setTEMPUSER, setUSERFULLINFO } from '@/store/actions';
 import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import UserCard from '@/components/sub_components/FollowButton';
+import UserListCard from '@/components/sub_components/UserListCard';
 import Image from 'next/image';
 
 
@@ -24,6 +27,7 @@ import Image from 'next/image';
     'https://plus.unsplash.com/premium_photo-1675359772567-c09110eb33be?q=80&w=1579&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1532382172705-841174a528a7?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   ];
+
 
 
 
@@ -73,19 +77,23 @@ function Account() {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   let [googleLogged, setGoogleLogged] = useState<boolean>(false);
-  const [user, setUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (user) => {
+    onAuthStateChanged(firebaseAuth, async (user) => {
       if(user){
-        setUser(user);
-        dispatch(setTEMPUSER(user))
+        const res = await axios.get(`api/findUserByEmail?email=${user.email}`)
+        setCurrentUser(res.data.user);
+        dispatch(setUSERFULLINFO(res.data.user));
+        setUserData(res.data.user); 
+        console.log(currentUser)
+
         setGoogleLogged(true)
       }
       else{
-        setUser("");
+        setCurrentUser("");
       }
     })
   }, [])
@@ -98,7 +106,7 @@ function Account() {
         const response = await fetch('/api/user/');
         if (response.ok) {
           const data = await response.json();
-          
+          setCurrentUser(data.user);
           setUserData(data.user); 
         } else {
           console.error('Failed to fetch user data:', response.statusText);
@@ -113,8 +121,58 @@ function Account() {
     fetchUserData();
   }, []);
 
-  console.log(user);
+  const [userFollowers, setUserFollowers] = useState(0)
+  // const [followersList, setFollowersList] = useState([]);
 
+  useMemo(() => {
+    const countFollowers = async () => {
+      try{
+        const res = await axios.get(`/api/countfollowers?userId=${currentUser._id}`);
+        setUserFollowers(res.data.followerCount)
+        // setFollowersList(res.data.followerslist)
+        console.log("LIST:  ",res.data.followerslist)
+      }
+      catch{
+        console.log("error")
+      }
+    }
+  
+    countFollowers()
+
+  }, [])
+
+
+  const [userFollowings, setUserFollowings] = useState(0)
+
+  useEffect(() => {
+    const countFollowings = async () => {
+      try{
+        const res = await axios.get(`/api/countfollowings?userId=${currentUser._id}`);
+        setUserFollowings(res.data.followingCount)
+      }
+      catch{
+        console.log("error")
+      }
+    }
+    countFollowings()
+  }, [])
+
+  const [userPosts, setUserPosts] = useState(0)
+
+  useEffect(() => {
+    const countPosts = async () => {
+      try{
+        const res = await axios.get(`/api/countuserposts?userId=${currentUser._id}`);
+        console.log(currentUser)
+        setUserPosts(res.data.postsCount)
+      }
+      catch{
+        console.log("error")
+      }
+    }
+    countPosts()
+  }, [])
+  
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -130,11 +188,6 @@ function Account() {
       opacity: 0,
       duration: 1,
       stagger: 0.2,
-      scrollTrigger: {
-        trigger: 'gsap',
-        scroller: "el",
-        scrub: 3
-      }
     });
   });
 
@@ -142,37 +195,27 @@ function Account() {
   return (
     <>
       <Navbar />
-      <div className="main dark-mode-bg w-full">
-       <div className='front_main  w-8/12 pt-10 ml-72'>
-      
-        <div className='back_profile h-72 w-full bg-zinc-900 rounded-xl mb-[-4rem]'>
-              
+      <div className="main flex gap-32 dark-mode-bg w-full h-[100vh] p-32 pl-[30rem]">
+      <div className="profile gsap w-[10rem] h-[10rem] overflow-hidden rounded-full relative cursor-pointer">
+          <img src={currentUser.profilePicture || "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"} className='object-cover  object-center' />
+          <input type="file" name="profile" id="" onChange={handleFileChange} className='absolute w-full h-full z-[5] '/>
         </div>
-        <div className='flex gap-12 '>
-           <div className="profile gsap w-[10rem] h-[10rem] overflow-hidden rounded-full relative cursor-pointer  ">
-              <img src={userData.profilePicture || "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"} className='object-cover object-center' />
-              <input type="file" name="profile" id="" onChange={handleFileChange} className='absolute w-full h-full z-[-5] '/>
-              
-            </div>
-            
-        
+        <div className="information gsap w-[20rem] h-[8rem] justify-start">
+          <div className='flex gap-8'>
+          <h1 className="text-2xl">{googleLogged ? currentUser.fullname : userData.fullname}</h1>
+            <button>Edit Profile</button>
 
-            <div className="information gsap w-[20rem] h-[8rem] mt-20 ">
-            <h1 className="text-3xl font-semibold fo">{googleLogged ? user.displayName : userData.fullname}</h1>
-               
-
-           <div className='flex gap-7 mt-4'>
-            <h1>{0 }</h1> <span className='ml-[-7%] gsap '>posts</span>
-            <h1>{0 }</h1> <span className='ml-[-7%] gsap'>followers</span>
-            <h1>{0 }</h1> <span className='ml-[-7%] gsap'>followings</span>
-           </div>
-
-             <h1 className='mt-2 font-semibold gsap'>{userData.name }</h1>
-             <h1 className='font-thin gsap'>{userData.bio }</h1>
-           </div>
           </div>
 
-          <hr></hr>
+          <div className='flex gap-7'>
+            <h1>{userPosts}</h1> <span className='ml-[-7%] gsap'>posts</span>
+            <h1>{userFollowers }</h1> <span className='ml-[-7%] gsap'>followers</span>
+            <h1>{userFollowings }</h1> <span className='ml-[-7%] gsap'>followings</span>
+          </div>
+
+          <h1 className='mt-4 font-semibold gsap'>{currentUser.name }</h1>
+          <h1 className='font-thin gsap'>{currentUser.bio }</h1>
+
           <div className='grid-container mt-10 flex min-h-30 gap-5 min-w-[60vw] '>
               {ImageSources.map((src,index) => (         
                  <Image  width={200} height={10} key={index} src={src} alt={''} className='overflow-hidden object-cover'/>

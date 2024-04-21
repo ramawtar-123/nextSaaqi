@@ -15,6 +15,7 @@ import { login, logout, toggleDarkMode, setUSER } from '../../store/actions';
 import { Fullscreen } from 'lucide-react';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react';
+import Image from 'next/image';
 
 
 const firebaseConfig = {
@@ -111,21 +112,25 @@ const page = () => {
         <div className="flex items-center blackShade justify-center h-[100vh] ">
           <div className='back h-full w-[100%] '>
             <div className='h-10 w-[50%] flex  justify-between text-white '>
-              <div className='logo h-10 w-10  rounded-full ml-32 mt-9 '><h1 className='ml-14 text-2xl font-bold hover:text-purple-500'>SAAQI</h1></div>
-              <div className='flex gap-20 mr-8 mt-10 '>
+            <div className='logo gsap h-10 w-10 rounded-full ml-32 mt-9 '><h1 className='ml-14 text-2xl font-bold '>SAAQI</h1></div>
+              <div className='flex gsap gap-20 ml-[24rem] mt-10 '>
                 <a href='' className='text-slate-400 gsap hover:text-purple-700 '>Home</a>
                 <a href='' className='text-slate-400 gsap hover:text-purple-700'>Join</a>
+                <a href='' className='text-slate-400 gsap hover:text-purple-700 '>Features</a>
+                <a href='' className='text-slate-400 w-[10rem] gsap hover:text-purple-700'>Contact Us</a>
               </div>
             </div>
             <div className="box flex flex-col transition-all items-center h-[80vh] w-[28vw] rounded-xl  text-white mt-24 ml-56">
               
               <div className="dets mt-[9%] transition-all  w-[90%] h-[70%] flex flex-col justify-center ">
-              <h1 className='text-4xl font-semibold mb-10'>Login</h1>
-                <button onClick={ USER && Object.keys(USER).length > 0 ? redirectToMain : signupWithGoogle} className='w-[18rem] gsap h-[3rem] mb-3 rounded-full text-black bg-zinc-100'>
+              <h1 className='text-4xl gsap font-semibold mb-10'>Login</h1>
+                <button onClick={ USER && Object.keys(USER).length > 0 ? redirectToMain : signupWithGoogle} className='w-[18rem] flex items-center justify-center  gsap h-[3rem] mb-3 rounded-full text-black bg-zinc-100'>
+                {<Image width={25} height={25} src={"https://e7.pngegg.com/pngimages/344/344/png-clipart-google-logo-google-logo-g-suite-google-text-logo-thumbnail.png"} alt='' className='mr-5'/>}
                   Signin With Google
                 </button>
 
-                <button onClick={USER ? redirectToMain : signupWithFacebook} className='w-[18rem] h-[3rem] gsap rounded-full text-black bg-zinc-100'>
+                <button onClick={USER ? redirectToMain : signupWithFacebook} className='w-[18rem] flex items-center justify-center  h-[3rem] gsap rounded-full text-black bg-zinc-100'>
+                {<Image width={40} height={40} src={"https://e7.pngegg.com/pngimages/286/412/png-clipart-facebook-scalable-graphics-icon-facebook-logo-facebook-logo-blue-logo-thumbnail.png"} alt='' className='mr-3 ml-2'/>}
                   Signin With Facebook
                 </button>
               </div>

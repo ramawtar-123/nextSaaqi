@@ -75,11 +75,11 @@ const Login = () => {
           <div className='back h-full w-[100%] '>
             <div className='h-10 w-[50%] flex  justify-between text-white '>
               <div className='logo gsap h-10 w-10 rounded-full ml-32 mt-9 '><h1 className='ml-14 text-2xl font-bold '>SAAQI</h1></div>
-              <div className='flex gsap gap-20 mr-8 mt-10 '>
+              <div className='flex gsap gap-20 ml-[24rem] mt-10 '>
                 <a href='' className='text-slate-400 gsap hover:text-purple-700 '>Home</a>
                 <a href='' className='text-slate-400 gsap hover:text-purple-700'>Join</a>
                 <a href='' className='text-slate-400 gsap hover:text-purple-700 '>Features</a>
-                <a href='' className='text-slate-400 gsap hover:text-purple-700'>Contact Us</a>
+                <a href='' className='text-slate-400 w-[10rem] gsap hover:text-purple-700'>Contact Us</a>
               </div>
             </div>
             <div className="box flex flex-col transition-all items-center h-[80vh] w-[28vw] rounded-xl  text-white mt-24 ml-56">

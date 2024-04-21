@@ -11,13 +11,11 @@ export default async function handler(req, res) {
 
 
   try {
-    // Fetch 10 random documents from the 'posts' collection
-    // const randomPosts = await Post.aggregate([{ $sample: { size: 10 } }]).populate('user');
 
     const randomPosts = await Post.aggregate([
         { $sample: { size: 10 } },
         { $lookup: { from: 'users', localField: 'user', foreignField: '_id', as: 'user' } },
-        { $unwind: '$user' } // If user field is an array, unwind it to get individual documents
+        { $unwind: '$user' } 
       ]);
 
 

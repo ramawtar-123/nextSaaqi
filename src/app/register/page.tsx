@@ -73,7 +73,7 @@ function Register() {
                   SAAQI
                 </h1>
               </div>
-              <div className="flex gap-20 mr-8 mt-10 ">
+              <div className="flex gap-20 ml-[24rem] mr-8 mt-10 ">
                 <a
                   href=""
                   className="text-slate-400 gsap hover:text-purple-700 "
@@ -94,7 +94,7 @@ function Register() {
                 </a>
                 <a
                   href=""
-                  className="text-slate-400 gsap hover:text-purple-700"
+                  className="text-slate-400 w-[10rem] gsap hover:text-purple-700"
                 >
                   Contact Us
                 </a>

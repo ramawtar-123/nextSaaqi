@@ -52,6 +52,8 @@ try {
   Posts = mongoose.model('Post', postSchema);
 }
 
+// const Posts = mongoose.model('Post') || mongoose.model('Post', postSchema)
+
 export default Posts;
 
 

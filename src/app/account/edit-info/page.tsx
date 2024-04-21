@@ -32,7 +32,7 @@ function UserDetails() {
   const router = useRouter()
   const fileInputRef = useRef(null);
 
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File>();
   const [status, setStatus] = useState('');
 
   const handleButtonClick = () => {
@@ -67,32 +67,7 @@ function UserDetails() {
 
 
   const USER = useSelector(state => state.rootReducer.fullUserInfo)
-
-  const handleFileChange = async (event) => {
-    console.log("IMAGEUSER: ",FULLUSERINFO)
-    const userString = JSON.stringify(FULLUSERINFO);
-
-    const file = event.target.files[0];
-    setFile(event.target.files[0])
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('user', userString);
-
-      try {
-        const response = await fetch('/api/uploadimage', {
-          method: 'POST',
-          body: formData,
-        });
-        const data = await response.json();
-        console.log(data); 
-      } catch (error) {
-        console.error('Error uploading file:', error);
-     
-      }
-    }
-
-  };
+ 
 
   let name = TEMPUSER.fullname
   let email = TEMPUSER.email
@@ -108,6 +83,42 @@ function UserDetails() {
     profilepicture: ""
   });
 
+  const [filepath, setFilepath] = useState("");
+
+  const handleFileChange = async (event) => {
+    console.log("IMAGEUSER: ",FULLUSERINFO)
+    const userString = JSON.stringify(FULLUSERINFO);
+
+    const file = event.target.files?.[0];
+    setFile(file)
+    if (file) {
+      
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('user', userString);
+
+
+        const response = await fetch('/api/uploadimage', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await response.json();
+        setFilepath(data.filelocation)
+
+        setFormData(prevState => ({
+          ...prevState,
+          profilepicture: data.filelocation
+        }));
+
+        console.log(data.filelocation); 
+      } catch (error) {
+        console.error('Error uploading file:', error);
+     
+      }
+    }
+
+  };
 
   const handleUsernameChange = (e) => {
     setFormData(prevState => ({
@@ -124,14 +135,18 @@ function UserDetails() {
       ...prevState,
       email: email
     }));
+
   
-    console.log("FORMDATA: ",formData.username) 
   };
 
-  useEffect(() => {
-    
-  
-  }, [])
+  const handleBioChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      bio: e.target.value
+    }));
+
+  }
+
   
 
   const USERINFO = useSelector(state => state.rootReducer.fullUserInfo)
@@ -144,6 +159,8 @@ function UserDetails() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log('Form Data:', formData);
 
     try {
       const response = await fetch("/api/register", {
@@ -167,30 +184,7 @@ function UserDetails() {
     }
   };
 
-  const uploadFile = async () => {
-    if (!file) {
-      setStatus('Please select a file');
-      return;
-    }
 
-    // const formData = new FormData();
-    // formData.append('file', file);
-
-    try {
-      const response = await fetch('/api/uploadimage', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
-
-
-
-      // setStatus(data.message);
-    } catch (error) {
-      // console.error('Error uploading file:', error);
-      setStatus('An error occurred while uploading the file');
-    }
-  };
 
   useGSAP(() => {
     var tl = gsap.timeline();
@@ -214,7 +208,7 @@ function UserDetails() {
         <form onSubmit={handleSubmit} className='flex-col gap-10 '>
             <div className="prof bg-red-600 border-2 w-20 h-20 rounded-full m-auto mb-10">
               <input onChange={handleFileChange} ref={fileInputRef} className='text-black hidden gsap' type="file" name="picture" id="picture" placeholder='' /><br /><br />
-              <button className='gsap' onClick={handleButtonClick}>Upload</button>
+              <button className='gsap' type='button' onClick={handleButtonClick}>Upload</button>
             </div>
             
             <div className="names justify-center items-center flex gap-5 ">
@@ -223,7 +217,7 @@ function UserDetails() {
             </div>
             <br/>
             <input className='w-[36%] h-9 p-4 gsap pl-6 text-white bg-zinc-900 rounded-[8px] focus:outline-none placeholder-zinc-500 mb-[-10px] text-[14px]' type="email" name="email" id="email" placeholder={TEMPUSER.email}  /><br /><br />
-            <input className='w-[36%] h-9 p-4 gsap pl-6 text-white bg-zinc-900 rounded-[8px] focus:outline-none placeholder-gray-200 mb-[-10px] text-[14px] ' type="text" name="bio" id="bio" placeholder='Bio' /><br /><br />
+            <input className='w-[36%] h-9 p-4 gsap pl-6 text-white bg-zinc-900 rounded-[8px] focus:outline-none placeholder-gray-200 mb-[-10px] text-[14px] ' type="text" name="bio" id="bio" onChange={handleBioChange} placeholder='Bio' /><br /><br />
             <button className='w-[10%] h-9 gsap cursor-pointer text-white bg-zinc-900 rounded-[8px] text-[14px]' type="submit" value="submit" >Submit</button>
         </form>
     </div>
